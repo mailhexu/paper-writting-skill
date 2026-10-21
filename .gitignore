@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+/AGENTS.md
+/CONTEXT.md
+/DISCUSSION.md
+/SCENARIOS.md
+/STATUS.md
+/figure-style/
+/PRD.md
+/memnotes
+/.pytest_cache/
+/.coverage
