@@ -1,0 +1,150 @@
+{
+  "schema": "pws.venue-profiles/1",
+  "profiles": {
+    "prb": {
+      "name": "Physical Review B",
+      "sources": {
+        "authors": {
+          "label": "APS Physical Review B author guidance",
+          "url": "https://journals.aps.org/prb/authors",
+          "checked_on": "2026-10-13",
+          "caveat": "Recheck the current article-type requirements when selecting the venue."
+        },
+        "ai": {
+          "label": "APS policy on appropriate use of AI tools",
+          "url": "https://journals.aps.org/authors/appropriate-use-ai-tools",
+          "checked_on": "2026-10-13",
+          "caveat": "Substantive AI use is disclosed; authors retain responsibility for accuracy."
+        },
+        "figures": {
+          "label": "Physical Review author guidance and project figure-style venue delta",
+          "url": "https://journals.aps.org/prb/authors",
+          "reference": "paper-writing-skill/references/figure-style.md#venue-deltas",
+          "checked_on": "2026-10-16",
+          "caveat": "Per-paper author overlay takes precedence; confirm current production requirements."
+        }
+      },
+      "checks": [
+        {"id": "article-type", "label": "article type", "rule": "one_of", "field": "article_type", "values": ["regular_article", "letter"], "source": "authors"},
+        {"id": "word-limit", "label": "article word count", "rule": "word_limit", "field": "word_count", "lookup_field": "article_type", "limits": {"regular_article": null, "letter": 4500}, "source": "authors"},
+        {"id": "self-contained", "label": "main article stands on its own without Supplementary Material", "rule": "equals", "field": "body_stands_alone_without_supplement", "expected": true, "source": "authors"},
+        {"id": "current-policy", "label": "current policy was rechecked for this submission", "rule": "policy_recheck", "date_field": "current_policy_checked_on", "attestation_field": "current_policy_rechecked", "not_before": "2026-10-13", "source": "authors"},
+        {"id": "ai-disclosure", "label": "substantive AI use is disclosed", "rule": "conditional_equals", "condition_field": "ai_use", "condition_values": ["substantive"], "condition_allowed_values": ["none", "basic", "substantive"], "field": "ai_disclosure", "expected": true, "source": "ai"}
+      ],
+      "ai": {
+        "required_uses": ["substantive"],
+        "no_disclosure_uses": ["none", "basic"],
+        "placement_guidance": "Use the location required by the current APS policy and the manuscript's article type.",
+        "template": "The authors used {tools} for {purpose}. Human review recorded: {human_review}. {responsibility_statement} Placement: {placement}."
+      },
+      "figure": {
+        "columns_mm": {"single": 86, "double": 172},
+        "body_font_pt": 8,
+        "minimum_ordinary_font_pt": 7,
+        "minimum_script_font_pt": 6,
+        "allowed_formats": ["pdf", "png"],
+        "minimum_raster_dpi": 500,
+        "panel_style_default": "parenthesized",
+        "palette_hex": ["0072B2", "D55E00", "009E73", "CC79A7", "E69F00", "56B4E9", "000000", "FFFFFF"],
+        "source": "figures"
+      }
+    },
+    "cpc": {
+      "name": "Computer Physics Communications",
+      "sources": {
+        "authors": {
+          "label": "CPC Guide for Authors",
+          "url": "https://www.sciencedirect.com/journal/computer-physics-communications/publish/guide-for-authors",
+          "checked_on": "2026-10-13",
+          "caveat": "The accessible article-category details were from an archived guide and are historical evidence, not a verified current submission contract."
+        },
+        "ai": {
+          "label": "Elsevier policy on the use of generative AI and AI-assisted technologies in scientific writing",
+          "url": "https://www.elsevier.com/about/policies-and-standards/generative-ai-policies-for-journals",
+          "checked_on": "2026-10-13",
+          "caveat": "Recheck the target journal's current policy; research-process use belongs in Methods."
+        },
+        "figures": {
+          "label": "Elsevier artwork guidance and project figure-style venue delta",
+          "url": "https://www.sciencedirect.com/journal/computer-physics-communications/publish/guide-for-authors",
+          "reference": "paper-writing-skill/references/figure-style.md#venue-deltas",
+          "checked_on": "2026-10-16",
+          "caveat": "Per-paper author overlay takes precedence; confirm current production requirements."
+        }
+      },
+      "checks": [
+        {"id": "article-type", "label": "article type", "rule": "one_of", "field": "article_type", "values": ["computer_programs_in_physics", "computational_physics"], "source": "authors"},
+        {"id": "program-summary", "label": "Computer Programs in Physics Program Summary is present", "rule": "conditional_nonempty", "condition_field": "article_type", "condition_values": ["computer_programs_in_physics"], "condition_allowed_values": ["computer_programs_in_physics", "computational_physics"], "field": "program_summary", "source": "authors"},
+        {"id": "current-policy", "label": "current policy was rechecked for this submission", "rule": "policy_recheck", "date_field": "current_policy_checked_on", "attestation_field": "current_policy_rechecked", "not_before": "2026-10-13", "source": "authors"},
+        {"id": "ai-disclosure", "label": "AI use is explicitly declared and required generative-AI use is disclosed", "rule": "conditional_equals", "condition_field": "ai_use", "condition_values": ["manuscript_preparation", "research_process"], "condition_allowed_values": ["none", "manuscript_preparation", "research_process"], "field": "ai_disclosure", "expected": true, "source": "ai"}
+      ],
+      "ai": {
+        "required_uses": ["manuscript_preparation", "research_process"],
+        "no_disclosure_uses": ["none"],
+        "placement_guidance": "Manuscript-preparation use is disclosed; research-process use is reported in Methods.",
+        "template": "The authors used {tools} for {purpose}. Human review recorded: {human_review}. {responsibility_statement} Placement: {placement}."
+      },
+      "figure": {
+        "columns_mm": {"single": 90, "one_and_half": 140, "double": 190},
+        "body_font_pt": 8,
+        "minimum_ordinary_font_pt": 7,
+        "minimum_script_font_pt": 6,
+        "allowed_formats": ["pdf", "png"],
+        "minimum_raster_dpi_by_artwork_type": {"halftone": 300, "combination": 500, "line_art": 1000},
+        "panel_style_default": "parenthesized",
+        "palette_hex": ["0072B2", "D55E00", "009E73", "CC79A7", "E69F00", "56B4E9", "000000", "FFFFFF"],
+        "source": "figures"
+      }
+    },
+    "npj": {
+      "name": "npj Computational Materials",
+      "sources": {
+        "authors": {
+          "label": "npj Computational Materials submission guidelines",
+          "url": "https://www.nature.com/npjcompumats/for-authors-and-referees/submission-guidelines",
+          "checked_on": "2026-10-13",
+          "caveat": "Recheck current article-type and submission requirements when selecting the venue."
+        },
+        "ai": {
+          "label": "Nature Portfolio AI policy",
+          "url": "https://www.nature.com/nature-portfolio/editorial-policies/ai",
+          "checked_on": "2026-10-13",
+          "caveat": "LLM use is documented in Methods or another suitable location; verify the current policy."
+        },
+        "figures": {
+          "label": "npj Computational Materials submission guidelines and project figure-style venue delta",
+          "url": "https://www.nature.com/npjcompumats/for-authors-and-referees/submission-guidelines",
+          "reference": "paper-writing-skill/references/figure-style.md#venue-deltas",
+          "checked_on": "2026-10-16",
+          "caveat": "Per-paper author overlay takes precedence; confirm current production requirements."
+        }
+      },
+      "checks": [
+        {"id": "word-count-recorded", "label": "article word count recorded; checked pages reported no overall Article cap, which is not proof no cap exists", "rule": "nonnegative_integer", "field": "word_count", "source": "authors"},
+        {"id": "data-statement", "label": "Data Availability Statement is present", "rule": "nonempty", "field": "data_statement", "source": "authors"},
+        {"id": "central-code", "label": "code availability is stated when custom code is central to claims", "rule": "conditional_nonempty", "condition_field": "central_custom_code", "condition_values": [true], "condition_allowed_values": [true, false], "field": "code_statement", "source": "authors"},
+        {"id": "supplementary-methods", "label": "Methods are not moved to Supplementary Methods", "rule": "equals", "field": "supplementary_methods", "expected": false, "source": "authors"},
+        {"id": "figure-legend-length", "label": "figure legend body is at most 350 words", "rule": "maximum", "field": "figure_legend_words", "maximum": 350, "source": "authors"},
+        {"id": "current-policy", "label": "current policy was rechecked for this submission", "rule": "policy_recheck", "date_field": "current_policy_checked_on", "attestation_field": "current_policy_rechecked", "not_before": "2026-10-13", "source": "authors"},
+        {"id": "ai-disclosure", "label": "LLM use is documented in Methods or another suitable location", "rule": "conditional_nonempty", "condition_field": "ai_use", "condition_values": ["basic", "manuscript_preparation", "research_process", "substantive"], "condition_allowed_values": ["none", "basic", "manuscript_preparation", "research_process", "substantive"], "field": "ai_disclosure_location", "source": "ai"}
+      ],
+      "ai": {
+        "required_uses": ["basic", "manuscript_preparation", "research_process", "substantive"],
+        "no_disclosure_uses": ["none"],
+        "placement_guidance": "Methods or another suitable location, according to the current Nature Portfolio policy.",
+        "template": "The authors used {tools} for {purpose}. Human review recorded: {human_review}. {responsibility_statement} This use is documented in {placement}."
+      },
+      "figure": {
+        "columns_mm": {"single": 89, "double": 183},
+        "body_font_pt": 8,
+        "minimum_ordinary_font_pt": 7,
+        "minimum_script_font_pt": 6,
+        "allowed_formats": ["pdf", "png"],
+        "minimum_raster_dpi": 300,
+        "panel_style_default": "parenthesized",
+        "palette_hex": ["0072B2", "D55E00", "009E73", "CC79A7", "E69F00", "56B4E9", "000000", "FFFFFF"],
+        "source": "figures"
+      }
+    }
+  }
+}
