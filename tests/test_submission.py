@@ -726,3 +726,95 @@ def test_lowercase_and_multicite_commands_check_every_citation_group(tmp_path):
     assert result.returncode == 1
     assert output["missing_keys"] == ["missing-lower", "missing-multi"]
     assert bib.read_bytes() == original
+
+
+def test_bibliography_check_uses_real_verifier_without_writes_and_selects_exact_key(tmp_path):
+    inputs = tmp_path / "inputs"
+    inputs.mkdir()
+    bib = inputs / "references.bib"
+    bib.write_text(
+        "@article{alpha,doi={10.1/alpha},title={Alpha paper},author={Doe, Jane},year={2020}}\n"
+        "@article{beta,doi={10.1/beta},title={Beta paper},author={Doe, Jane},year={2020}}\n"
+        "@article{local,title={Local record}}\n"
+        "@article{absent,doi={10.1/absent},title={Absent paper}}\n"
+        "@article{broken,doi={10.1/broken},title={Broken paper}}\n",
+        encoding="utf-8",
+    )
+    for name in ("references_fixed.bib", "references_order_changed.bib", "references_cache.json"):
+        (inputs / name).write_bytes(b"author-owned sidecar")
+    before = {path.name: path.read_bytes() for path in inputs.iterdir()}
+    responses = {
+        "https://doi.org/10.1/alpha": {
+            "status": 200,
+            "text": "@article{remote,doi={10.1/alpha},title={Alpha paper},author={Doe, Jane},year={2021}}",
+        },
+        "https://doi.org/10.1/beta": {
+            "status": 200,
+            "text": "@article{remote,doi={10.1/beta},title={Beta paper},author={Doe, Jane},year={2020}}",
+        },
+        "https://doi.org/10.1/absent": {"status": 404},
+        "https://doi.org/10.1/broken": None,
+    }
+    calls = tmp_path / "provider-calls.txt"
+    bootstrap = """
+import json
+import runpy
+import sys
+from pathlib import Path
+from unittest.mock import Mock
+import requests
+responses = json.loads(sys.argv[1])
+calls = Path(sys.argv[2])
+sys.argv = sys.argv[3:]
+def controlled_get(url, **kwargs):
+    with calls.open("a", encoding="utf-8") as stream:
+        stream.write(url + "\\n")
+    record = responses[url]
+    if record is None:
+        raise requests.exceptions.Timeout("controlled provider failure")
+    return Mock(status_code=record["status"], text=record.get("text", ""))
+requests.get = controlled_get
+runpy.run_path(sys.argv[0], run_name="__main__")
+"""
+
+    def verify(*selection):
+        calls.write_text("", encoding="utf-8")
+        result = subprocess.run(
+            [PYTHON, "-c", bootstrap, json.dumps(responses), str(calls), str(TOOL),
+             "bibliography-check", "--bib", str(bib), *selection],
+            capture_output=True, text=True, timeout=60,
+        )
+        output = report(result)
+        assert {path.name: path.read_bytes() for path in inputs.iterdir()} == before
+        return result, output, calls.read_text(encoding="utf-8").splitlines()
+
+    result, whole, requested = verify()
+    assert result.returncode == 1
+    assert whole["status"] == "fail"
+    assert whole["verification"]["outcome"] == "unverifiable"
+    entries = whole["verification"]["entries"]
+    assert [entry["key"] for entry in entries] == ["alpha", "beta", "local", "absent", "broken"]
+    assert entries[0]["differences"] == [{"field": "year", "original": "2020", "proposed": "2021"}]
+    assert [entry["reason"] for entry in entries[2:]] == [
+        "missing_identifier", "no_match", "query_failure",
+    ]
+    assert requested == list(responses)
+
+    result, selected, requested = verify("--key", "alpha")
+    assert result.returncode == 1
+    assert selected["verification"]["outcome"] == "differences"
+    assert [entry["key"] for entry in selected["verification"]["entries"]] == ["alpha"]
+    assert selected["verification"]["entries"][0]["differences"] == entries[0]["differences"]
+    assert requested == ["https://doi.org/10.1/alpha"]
+
+    result, clean, requested = verify("--key", "beta")
+    assert result.returncode == 0
+    assert clean["status"] == "pass"
+    assert clean["verification"]["outcome"] == "clean"
+    assert requested == ["https://doi.org/10.1/beta"]
+
+    result, invalid, requested = verify("--key", "Alpha")
+    assert result.returncode == 1
+    assert invalid["status"] == "fail"
+    assert invalid["verification"]["error"]["code"] == "selection_error"
+    assert requested == []

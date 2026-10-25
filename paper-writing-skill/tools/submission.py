@@ -970,6 +970,26 @@ def citation_check(tex_value: str | Path, bib_value: str | Path) -> dict[str, An
     }
 
 
+def bibliography_check(bib_value: str | Path, *, key: str | None = None) -> dict[str, Any]:
+    try:
+        from bibcheck.bibcheck import verify_bib_file
+    except ImportError as error:
+        raise SubmissionError(
+            "bibliography verification requires BibCheck's read-only verify_bib_file interface; "
+            "install the delivered BibCheck package in this Python environment"
+        ) from error
+    bib_path = Path(bib_value).expanduser().resolve()
+    verification = verify_bib_file(bib_path, key=key)
+    return {
+        "schema": REPORT_SCHEMA,
+        "status": "pass" if verification["outcome"] == "clean" else "fail",
+        "source": {"bibliography": str(bib_path)},
+        "verification": verification,
+        "caveat": SCIENTIFIC_CAVEAT,
+        "boundary": BOUNDARY,
+    }
+
+
 def _resolved_locator_identity(locator: Any, manifest_path: Path) -> tuple[str, ...] | None:
     if not isinstance(locator, dict):
         return None
@@ -1168,6 +1188,12 @@ def main(argv: list[str] | None = None) -> int:
     citations_parser.add_argument("--tex", required=True)
     citations_parser.add_argument("--bib", required=True)
 
+    bibliography_parser = commands.add_parser(
+        "bibliography-check", help="verify bibliography metadata read-only using BibCheck",
+    )
+    bibliography_parser.add_argument("--bib", required=True)
+    bibliography_parser.add_argument("--key", help="Exact, case-sensitive citation key; omit for all entries")
+
     args = parser.parse_args(argv)
     try:
         if args.command == "venue-check":
@@ -1182,6 +1208,8 @@ def main(argv: list[str] | None = None) -> int:
             result = _inspect_figures(args.venue, args.manifest, args.profiles)
         elif args.command == "citation-check":
             result = citation_check(args.tex, args.bib)
+        elif args.command == "bibliography-check":
+            result = bibliography_check(args.bib, key=args.key)
         else:  # pragma: no cover - argparse constrains this
             raise SubmissionError(f"unknown command '{args.command}'")
     except (SubmissionError, ManifestError, OSError) as error:

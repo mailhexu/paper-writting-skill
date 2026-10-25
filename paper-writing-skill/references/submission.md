@@ -22,6 +22,8 @@ python paper-writing-skill/tools/submission.py disclosure --venue npj --usage ai
 python paper-writing-skill/tools/submission.py cover-letter --title 'Manuscript title' --venue 'Physical Review B' --plan paper-plan.json
 python paper-writing-skill/tools/submission.py figure-check --venue prb --manifest figures.json
 python paper-writing-skill/tools/submission.py citation-check --tex main.tex --bib references.bib
+python paper-writing-skill/tools/submission.py bibliography-check --bib references.bib
+python paper-writing-skill/tools/submission.py bibliography-check --bib references.bib --key Smith2020
 ```
 
 每条命令在 stdout 输出 JSON `pws.submission-report/1`。成功退出码为 `0`；检查失败、未知 venue 或仍需人工检查的退出码为 `1`；参数用法错误由 argparse 报告。输入错误也产生带边界声明的 JSON fail 报告。该工具只读手稿和 `.bib`，不提交、重写或建议自动应用 bibliography 修改。
@@ -74,6 +76,8 @@ AI 分类由各 venue profile 明确映射到“披露”或“无需披露”�
 - PNG 检查 PNG 实际格式、嵌入 DPI 与计算出的物理宽度；文本、字体、panel、打印字号和色彩都标为 `manual-required`，总状态不会错误地报告 `pass`。
 - 当前参数档的单栏宽度为 PRB 86 mm、CPC 90 mm、npj 89 mm；CPC 另支持 140/190 mm，npj 183 mm，PRB 172 mm。字体/色板/分辨率配置和出处见 venue profiles 与 `figure-style.md`。不可将机械结果解释为已经完成打印尺寸视觉审查。
 
+最终尺寸目检还须检查坐标轴标签等内容是否被页面边缘裁切；抽取到完整文字或机械项没有失败都不能替代这一步。
+
 可安装 PDF/PNG 检查依赖：
 
 ```sh
@@ -86,4 +90,22 @@ PDF 检查还要求系统 PATH 有 Poppler `pdffonts`；工具不会自动安装
 
 `citation-check` 解析常用 TeX citation command（含小写 `\parencite`/`\textcite` 与 `\cites{...}{...}` 等 multicite 的每个参数组）并比对 `.bib` entry key，点出正文引用但 bibliography 不存在的 key；注释中的引用不计入。该本地检查不查询 DOI/arXiv、不判断条目元数据、不检查引文是否支持正文论点、不写入两份输入；metadata agreement does not establish scientific support。
 
-Story 016 还要求将外部 `bibcheck` 的整文件及单条 citation-key 核验、字段差异和“未能核验”结果消费到本工具。当前检查了 `/home/hexu/projects/bibcheck/bibcheck_package/bibcheck/bibcheck.py` 的公开 argparse 接口：它只接受一个可选整份 BibTeX 文件位置参数、`-c/--config`、`--print-config` 和 `--missing-only`；没有按 citation key 选取单条 entry 的参数/公开调用接口，也未找到本 Story 所需的单条结构化字段差异与缺标识符/匹配失败/查询失败状态合同。整文件 CLI 在摘要中对无可自动检查差异报告“没有可自动检查的差异”，但仍以退出码 0 结束，不能区分成功核验与未能核验；同时会写相邻 `_fixed.bib`、`_order_changed.bib` 与 lookup cache。该行为不满足只读结构化消费合同，不能直接接入或当只读单条检查调用。**因此未调用 bibcheck、不复制其元数据核验逻辑、不改动其仓库，也不宣称 bibliography metadata acceptance 已满足。** 该验收项须等 bibcheck 在其自身治理记录下独立交付并记录受支持的只读接口/结果语义后再接线。
+`bibliography-check` 通过受支持的 `bibcheck.bibcheck.verify_bib_file` Python 接口核验元数据，不复制 DOI/arXiv 查询或比较逻辑。运行环境须安装包含该只读接口的已交付 BibCheck 包；缺包或旧版缺少该接口时返回显式依赖错误，不退回旧的会写文件的校正命令，也不把本地 key 对应检查当成元数据核验。本工具不自动安装依赖或硬编码开发机源码路径。
+
+| 参数 | 含义 |
+|------|------|
+| `--bib` | 必填；输入 `.bib` 文件路径，不是 BibTeX 文本。 |
+| `--key` | 可选；精确、区分大小写的 citation key。省略时核验全部 entry，按输入顺序返回；指定时只查询和报告该 entry。整文件语法仍先检查，空/不存在/歧义 key 在查询前失败。 |
+
+JSON 报告沿用 `pws.submission-report/1`；`verification` 保留 BibCheck 原始结构化报告，包括每条 entry 的状态、查询来源、原始 `{field, original, proposed}` 差异、不可用字段、原因和作者审批 notice。比较采用 BibCheck 默认配置；本工具不另造配置或报告协议。
+
+| BibCheck `verification.outcome` | 本工具 `status` / 退出码 |
+|------------------------------|-------------------------|
+| `clean` | `pass` / 0 |
+| `differences` | `fail` / 1，保留建议，不应用修改 |
+| `unverifiable` | `fail` / 1，保留 `missing_identifier`、`no_match`、`query_failure` 及其他有效结果 |
+| `error` | `fail` / 1，保留 input/selection 等显式错误 |
+
+Python 集成人可在工具模块目录位于 import path 时调用 `submission.bibliography_check(bib_value, *, key=None)`；返回同一外层字典，不打印、不写文件。需要直接使用 BibCheck 的比较配置时，使用其自身受支持的 `verify_bib_file` 接口，而不是修改或绕过本检查。
+
+检查不改写作者 `.bib`、相邻 corrected/order-only 文件或持久缓存。缺标识符、无可靠匹配与查询失败都不是通过；混合报告中存在已知差异也不会掩盖未能核验的 entry。所有建议修改都须作者确认，元数据一致不代表文献支持正文科学论断。

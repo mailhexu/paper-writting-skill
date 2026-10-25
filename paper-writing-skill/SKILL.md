@@ -40,7 +40,7 @@ description: >
 | 起草证据边注（TeX 投影） | [references/evidence-projection.md](references/evidence-projection.md) | 可用（生成 `evidence-metadata.tex` 投影与 `\evidenceblock`/`\evidencemarginfalse` 开关，`tools/evidence_projection.py`） |
 | 编辑评审（科学/编辑清单、prune、图形 gate） | [references/editorial-review.md](references/editorial-review.md) | 可用（类型化 finding 格式、科学/编辑独立清单、prune proposal 与拒绝留档、图形评审试点 gate，Story 012）。注意：结构修订后的整稿语言 pass（FR-B5）属起草阶段，由 [references/drafting.md](references/drafting.md) 覆盖；本阶段按 finding 格式收录其结果 |
 | 图形（构造与核验） | [references/figure-style.md](references/figure-style.md) | 可用（全局缺省；逐篇约定可覆盖，reference 内显式 defer） |
-| 提交（构建门、清洁导出、复现检查与合规） | [references/clean-export.md](references/clean-export.md)、[references/repro-check.md](references/repro-check.md)、[references/submission.md](references/submission.md) | 部分可用（Story 014 `build_gate.py`；Story 015 `evidence_export.py` / `repro_check.py`；Story 016 venue、可用性声明、AI 披露、cover letter、真实图文件与引文 key 检查，入口 `tools/submission.py`；bibcheck 单条元数据核验依赖尚未交付，reference 明示缺口） |
+| 提交（构建门、清洁导出、复现检查与合规） | [references/clean-export.md](references/clean-export.md)、[references/repro-check.md](references/repro-check.md)、[references/submission.md](references/submission.md) | 工具可调用：`build_gate.py`、`evidence_export.py`、`repro_check.py`；`submission.py` 提供 venue、可用性声明、AI 披露、cover letter、图文件、引文 key 与 BibCheck 整份/单 key 只读元数据检查。必要图形目检和实际投稿仍由作者执行 |
 
 未实现阶段的处理：向用户如实说明该阶段能力尚未交付、需要先经相应 Story
 批准实现；不要引用不存在的文件，不要用通用写作建议冒充本技能的该阶段。
