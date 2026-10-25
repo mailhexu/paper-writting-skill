@@ -10,3 +10,4 @@ __pycache__/
 /memnotes
 /.pytest_cache/
 /.coverage
+/.tmp/
