@@ -1,8 +1,9 @@
 ---
 name: paper-writing-skill
 description: >
-  从已记录的物理与科学软件研究中准备期刊论文：入口路由按当前任务只加载
-  所需阶段的说明。阶段覆盖材料/计划、起草、证据检查、编辑评审、图形、提交。
+  从已记录的物理与科学软件研究中准备期刊论文：从论文定位逐步细化主线、
+  章节与图形、段落和面向读者的正文；按当前任务加载材料/计划、起草、证据、
+  编辑评审、图形或提交说明，并承接已确认的决定。
   科学事实与证据一律来自既有研究记录，本技能不做科学计算、不改研究数据。
 ---
 
@@ -29,13 +30,14 @@ description: >
 
 ## 阶段选择
 
-识别用户当前任务所属阶段，**只加载**该阶段的一行 reference；其他阶段的
-文件不进入本次上下文。
+先读该论文已有的 Plan、工作台与当前决定，定位第一个未解决且获授权的任务，
+再**只加载当前所需**的 reference；已有进展不从头问起。完成后若获准继续，
+再按需加载下一项，不预载整个流程。
 
 | 阶段 | Reference | 状态 |
 |------|-----------|------|
 | 材料/计划 | [references/material-plan.md](references/material-plan.md) | 可用 |
-| 起草（storyline、提纲、正文） | [references/drafting.md](references/drafting.md) | 可用（storyline-first 讨论与段落级提纲，Story 010；分节起草次序与各节写法、FR-B4 语言完整性、FR-B5 整稿语言 pass 与 Vale 晋升门槛，Story 011） |
+| 起草（主线、章节/图形设计、段落、正文） | [references/drafting.md](references/drafting.md) | 可用：自上而下的规划顺序与确认出口、living skeleton、分节起草、FR-B4 语言完整性、FR-B5 整稿语言 pass 与 Vale 晋升门槛 |
 | 证据检查（清单核验、取回验证） | [references/evidence-manifest.md](references/evidence-manifest.md) | 可用：manifest schema 校验与三种 locator 取回（Story 005）、采用时字节核验与快照（Story 006 `adopt`）、新鲜度检查与分诊报告（Story 007 `check`），入口均为 `tools/evidence_manifest.py`；TeX 投影见下行（Story 008）；清洁导出属 Story 009 |
 | 起草证据边注（TeX 投影） | [references/evidence-projection.md](references/evidence-projection.md) | 可用（生成 `evidence-metadata.tex` 投影与 `\evidenceblock`/`\evidencemarginfalse` 开关，`tools/evidence_projection.py`） |
 | 编辑评审（科学/编辑清单、prune、图形 gate） | [references/editorial-review.md](references/editorial-review.md) | 可用（类型化 finding 格式、科学/编辑独立清单、prune proposal 与拒绝留档、图形评审试点 gate，Story 012）。注意：结构修订后的整稿语言 pass（FR-B5）属起草阶段，由 [references/drafting.md](references/drafting.md) 覆盖；本阶段按 finding 格式收录其结果 |
@@ -45,11 +47,13 @@ description: >
 未实现阶段的处理：向用户如实说明该阶段能力尚未交付、需要先经相应 Story
 批准实现；不要引用不存在的文件，不要用通用写作建议冒充本技能的该阶段。
 
-阶段判定含糊时，先问一句确认阶段，再加载；不要一次加载多个阶段。
+仅当现有记录和用户要求仍不能判定下一步，且选择会改变工作时，才问一个具体
+问题；不要为阶段标签或已有答案重复索取确认。
 
 ## 使用规则
 
-- 一次调用 = 一个阶段 = 一个 reference；完成该阶段任务即停止加载。
+- “next / 继续”承接已批准范围内下一项有依据的工作，不批准未见过的科学结论、
+  新设计或计算。以当前进度、具体产出/变化和下一动作回应；实质未决处才提问。
 - 产出与决定记录进项目既有的 Kosmic 记录/工作台文件，不在本技能包内堆积
   论文专属状态。
 - 对作者既有约定（图形、风格、期刊习惯）保持缺省尊重（deference）；与其
