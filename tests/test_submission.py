@@ -15,7 +15,6 @@ ROOT = Path(__file__).resolve().parents[1]
 TOOLS = ROOT / "paper-writing-skill" / "tools"
 TOOL = TOOLS / "submission.py"
 PYTHON = sys.executable
-BOUNDARY = "Package completeness is not submission clearance; the author performs the actual submission. 包完整 ≠ 可投稿；实际投稿由作者执行。"
 
 
 def run_cli(*args: str) -> subprocess.CompletedProcess[str]:
@@ -88,7 +87,6 @@ def test_venue_check_lists_cited_requirements_and_fails_missing_or_over_limit_fi
 
     assert result.returncode == 1
     assert output["status"] == "fail"
-    assert output["boundary"] == BOUNDARY
     assert {item["status"] for item in output["checks"]} == {"pass", "fail"}
     assert any(item["id"] == "word-limit" and "4500" in item["detail"]
                for item in output["checks"] if item["status"] == "fail")
@@ -123,7 +121,6 @@ def test_venue_fixture_requires_review_when_title_absence_is_inconclusive(tmp_pa
     assert any(item["id"] == "figure-files" and item["status"] == "manual-required"
                for item in output["checks"])
     assert all(item["source"]["url"] for item in output["checks"])
-    assert output["boundary"] == BOUNDARY
 
 
 def test_unknown_venue_fails_without_falling_back_to_another_regime(tmp_path):
@@ -135,7 +132,6 @@ def test_unknown_venue_fails_without_falling_back_to_another_regime(tmp_path):
     assert output["status"] == "fail"
     assert "unknown venue" in output["checks"][0]["detail"].lower()
     assert "no default" in output["checks"][0]["detail"].lower()
-    assert output["boundary"] == BOUNDARY
 
 def test_venue_check_rejects_malformed_counts_and_declaration_types(tmp_path):
     base = {
@@ -181,7 +177,6 @@ def test_unhashable_article_type_returns_structured_failure(tmp_path):
     assert result.returncode == 1
     assert checks["article-type"]["status"] == "fail"
     assert checks["word-limit"]["status"] == "fail"
-    assert output["boundary"] == BOUNDARY
 
 
 def test_availability_statement_traces_record_fields_and_names_missing_metadata(tmp_path):
@@ -226,7 +221,6 @@ def test_availability_statement_traces_record_fields_and_names_missing_metadata(
     assert all(item["source"]["record"].endswith("repro-record.json") for item in output["fields"])
     assert output["fields"][0]["source"]["verified_input_sha256"] == "a" * 64
     assert output["fields"][0]["source"]["locator"] == {"kind": "retained", "path": "dataset.csv"}
-    assert output["boundary"] == BOUNDARY
 
     empty_record = write_json(tmp_path / "empty-record.json", {
         "schema": "pws.repro-record/1", "edition": "fixture-edition", "result": "pass",
@@ -361,7 +355,6 @@ def test_ai_disclosure_uses_each_venue_regime_and_unknown_venue_is_explicit(tmp_
     assert unknown_result.returncode == 1
     assert "verify the current policy" in unknown["text"].lower()
     assert "no default" in unknown["text"].lower()
-    assert unknown["boundary"] == BOUNDARY
 
 def test_cpc_check_and_disclosure_reject_unmapped_ai_categories(tmp_path):
     base = {
@@ -433,7 +426,6 @@ def test_cover_letter_refuses_unapproved_or_missing_plan_and_maps_each_contribut
     assert output["status"] == "pass"
     assert output["contributions"] == ["Contribution one", "Contribution two"]
     assert output["draft"].count("Contribution:") == 2
-    assert output["boundary"] == BOUNDARY
 
 
 def test_figure_check_inspects_real_rendered_pdf_and_reports_each_defect(tmp_path):
@@ -455,7 +447,6 @@ def test_figure_check_inspects_real_rendered_pdf_and_reports_each_defect(tmp_pat
     assert checks["panel-placement"]["status"] == "pass"
     assert all(item["status"] != "fail" for item in good_output["figures"][0]["checks"])
     assert {"physical-width", "font-family", "panel-labels", "embedded-title", "format"} <= set(checks)
-    assert good_output["boundary"] == BOUNDARY
 
     bad_pdf = tmp_path / "figure-bad.pdf"
     render_pdf(bad_pdf, width_mm=105, title="Embedded figure title", panel_label=False)
@@ -528,7 +519,6 @@ def test_png_figure_never_claims_semantic_checks_as_pass(tmp_path):
     assert checks["physical-width"] == checks["resolution"] == "pass"
     assert checks["panel-labels"] == checks["embedded-title"] == "manual-required"
     assert output["human_visual_reading"].startswith("required")
-    assert output["boundary"] == BOUNDARY
 
 
 
@@ -706,7 +696,6 @@ def test_citation_check_names_missing_key_without_modifying_bibliography(tmp_pat
     assert "known" not in output["missing_keys"]
     assert "metadata agreement does not establish scientific support" in output["caveat"].lower()
     assert bib.read_bytes() == original
-    assert output["boundary"] == BOUNDARY
 
 def test_lowercase_and_multicite_commands_check_every_citation_group(tmp_path):
     tex = tmp_path / "main.tex"

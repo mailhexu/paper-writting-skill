@@ -1,15 +1,13 @@
 #!/usr/bin/env python3
 r"""Evidence metadata TeX projection generator (Story 008, FR-D5 / ADR-005 / STD-005).
 
-Reads a Story-005 schema `evidence-manifest.yaml` and a draft `.tex` that calls
-`\evidenceblock{ID}`, and generates `evidence-metadata.tex`: a self-contained
-file that (a) defines the `\evidenceblock{ID}` macro rendering a grey, small
-font, standalone paragraph per ID, (b) provides the single display toggle
-`\evidencemarginfalse` (removes ALL evidence content from the PDF; display
-only — source sanitization is Story 009 export), and (c) carries the manifest
-metadata (intent, claim id, locator, commit, short sha) for every referenced
-ID, with path/field values TeX-escaped so the rendered text round-trips the
-manifest field content.
+Reads an adopted evidence manifest and draft ``\evidenceblock{ID}`` calls.
+Generates short gray notes: claim/artifact ID, edition, linked filenames and
+SHA-12. Full intent, source sets, locators, commits and hashes remain in the
+manifest and non-rendered JSON comments in the generated file.
+
+The single ``\evidencemarginfalse`` toggle hides notes in the PDF only.
+Clean source export removes the private metadata entirely (Story 009).
 
 The generated file is NOT hand-edited: regeneration overwrites it in full.
 
@@ -26,6 +24,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import json
 import re
 import sys
 from pathlib import Path
@@ -159,17 +158,16 @@ def validate_manifest(document: dict) -> tuple[dict[str, dict], dict[str, dict]]
         for reference in references:
             if not isinstance(reference, str) or reference not in artifact_map:
                 raise ProjectionError(f"{location}.artifacts: unknown artifact id '{reference}'")
+        display = claim.get("display_artifact")
+        if "display_artifact" in claim and (
+            not isinstance(display, str) or display not in references
+        ):
+            raise ProjectionError(f"{location}.display_artifact: must name one of the claim's artifacts")
         claim_map[claim_id] = claim
     return artifact_map, claim_map
 
 
 # -- projection ---------------------------------------------------------------
-
-
-def locator_description(locator: dict) -> str:
-    if locator["kind"] == "git":
-        return f"git {locator['repo']}@{locator['commit']}:{locator['path']}"
-    return f"{locator['kind']} {locator['path']}"
 
 
 def _strip_tex_comments(text: str) -> str:
@@ -222,53 +220,63 @@ def scan_draft_calls(draft_path: str, known_ids: set[str]) -> list[str]:
     return referenced
 
 
-def build_entries(draft_path: str, edition: str, artifact_map: dict, claim_map: dict) -> str:
-    """Render the per-ID \\csname entries for exactly the IDs the draft uses.
-
-    \\evidenceblock{ID} resolves CLAIM ids first (FR-D5: a block shows the
-    claim's intent, its id, and every cited artifact's locator, commit and
-    short sha, plus the evidence edition). Artifact-id blocks are also
-    accepted. Unknown or non-conforming ids are already rejected by
-    scan_draft_calls, so lookup here cannot miss.
-    """
+def build_entries(
+    draft_path: str, edition: str, artifact_map: dict, claim_map: dict, manifest: Path
+) -> str:
+    """Render compact notes; retain the complete source mapping out of view."""
     used = scan_draft_calls(draft_path, set(artifact_map) | set(claim_map))
     lines: list[str] = []
     for entry_id in used:
-        if entry_id in claim_map:
-            claim = claim_map[entry_id]
-            parts = [
-                f"[evidence] claim {tex_escape(entry_id)}",
-                f"intent: {tex_escape(claim['intent'])}",
-            ]
-            for artifact_id in claim["artifacts"]:
-                parts.extend(_artifact_parts(artifact_id, artifact_map[artifact_id]))
-            entry = " \\textperiodcentered{} ".join(parts)
-        else:
-            entry = " \\textperiodcentered{} ".join(
-                [f"[evidence] artifact {tex_escape(entry_id)}"]
-                + _artifact_parts(entry_id, artifact_map[entry_id])
-            )
-        entry += f" \\textperiodcentered{{}} edition {tex_escape(edition)}"
+        claim = claim_map.get(entry_id)
+        sources = claim["artifacts"] if claim else [entry_id]
+        visible = claim.get("display_artifact", sources[0]) if claim else entry_id
+        metadata = {
+            "id": entry_id,
+            "edition": edition,
+            "claim": {key: claim[key] for key in ("id", "statement", "intent", "reason", "artifacts")} if claim else None,
+            "artifacts": {
+                source: {
+                    "sha256": artifact_map[source]["sha256"],
+                    "locator": {
+                        key: artifact_map[source]["locator"][key]
+                        for key in (("kind", "repo", "commit", "path")
+                                    if artifact_map[source]["locator"]["kind"] == "git"
+                                    else ("kind", "path"))
+                    },
+                }
+                for source in sources
+            },
+        }
+        lines.append("%% evidence " + json.dumps(metadata, sort_keys=True, ensure_ascii=True))
+        parts = [f"[evidence] {tex_escape(entry_id)}", tex_escape(edition)]
+        parts.append(_artifact_link(artifact_map[visible], manifest))
+        extra = len(metadata["artifacts"]) - 1
+        if extra:
+            parts.append(_file_link(manifest, f"+{extra} sources"))
+        entry = " \\textperiodcentered{} ".join(parts)
         lines.append("\\expandafter\\def\\csname evdblock@" + entry_id + "\\endcsname{" + entry + "}")
     return "\n".join(lines) + "\n"
 
 
-def _artifact_parts(artifact_id: str, artifact: dict) -> list[str]:
+def _artifact_link(artifact: dict, manifest: Path) -> str:
     locator = artifact["locator"]
-    parts = [
-        f"source {tex_escape(artifact_id)}",
-        "\\mbox{" + tex_escape(locator_description(locator)) + "}",  # field text must survive line breaking
-    ]
+    path = manifest if locator["kind"] == "git" else manifest.parent / locator["path"]
+    label = Path(locator["path"]).name
     if locator["kind"] == "git":
-        parts.append(f"commit {tex_escape(locator['commit'])}")
-    parts.append(f"sha256 {tex_escape(artifact['sha256'][:12])}")
-    return parts
+        label += " (locator)"
+    return _file_link(path, label) + " \\texttt{" + artifact["sha256"][:12] + "}"
+
+
+def _file_link(path: Path, label: str) -> str:
+    # A true URI avoids hyperref's remote-PDF and extensionless-file rewriting.
+    uri = path.absolute().as_uri().replace("~", "%7E").replace("_", "%5F")
+    return "\\evidenceuri{" + tex_escape(uri) + "}{" + tex_escape(label) + "}"
 
 
 def generate(manifest_path: str, draft_path: str, output: str | None, template: Path) -> None:
     document = load_manifest(manifest_path)
     artifact_map, claim_map = validate_manifest(document)
-    entries = build_entries(draft_path, document["edition"], artifact_map, claim_map)
+    entries = build_entries(draft_path, document["edition"], artifact_map, claim_map, Path(manifest_path).resolve())
     try:
         skeleton = template.read_text(encoding="utf-8")
     except OSError as error:

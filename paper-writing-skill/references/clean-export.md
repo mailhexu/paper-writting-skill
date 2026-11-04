@@ -1,92 +1,99 @@
-# 阶段说明：严格构建门与清洁源码导出（Story 014 FR-D3 / Story 009 FR-D5 / STD-005）
+# Stage Note: Strict Build Gate and Clean-Source Export (Story 014 FR-D3 / Story 009 FR-D5 / STD-005)
 
-配套确定性 helper：`tools/evidence_export.py`（导出）、`tools/build_gate.py`（构建门）。
-开关（`\evidencemarginfalse`）只控制 PDF 显示；**提交用的真正剥离靠本导出**。
+Companion deterministic helpers: `tools/evidence_export.py` (export), `tools/build_gate.py` (build gate).
+The switch (`\evidencemarginfalse`) controls PDF display only; **the actual removal for submission is done by this export**.
 
-## 严格构建门（Story 014, FR-D3）
+## Strict build gate (Story 014, FR-D3)
 
-干净构建把提交 SHA 与证据版本（edition）ID 嵌入 PDF，文献在起草前冻结到带日期
-版本，引用错误或固定输入哈希失配时构建直接失败（Manubot 默认容忍引用是点名反模式）。
+A clean build embeds the submission SHA and evidence edition ID in the PDF, freezes the bibliography to a dated
+version before drafting, and fails directly on citation errors or pinned-input hash mismatches (Manubot's default
+tolerance of citations is a named anti-pattern).
 
 ```sh
-# 起草前：把参考文献冻结为带日期版本（快照字节 + sha256 + 日期 → bib-freeze.yaml）
+# Before drafting: freeze the bibliography to a dated version (snapshot bytes + sha256 + date → bib-freeze.yaml)
 python tools/build_gate.py freeze refs.bib --record bib-freeze.yaml
 
-# 干净构建：前置核验 + 宏嵌入 + 真实 pdflatex/bibtex 编译
+# Clean build: preflight verification + macro embedding + real pdflatex/bibtex compilation
 python tools/build_gate.py build --tex main.tex --manifest evidence-manifest.yaml \
     --bib refs.bib --freeze-record bib-freeze.yaml --commit <40-hex-SHA> [--output-dir build]
 ```
 
-构建前置检查复用 Story 005/006 的 `tools/evidence_manifest.py`：清单中每个 pinned
-输入按记录的 locator 取回实际字节并核对 sha256——哈希不是取回方式，也不用 HEAD
-代替未提交内容。失配即失败，点名 artifact 与期望/实际哈希；缺文件、locator 不可
-解析同样失败。
+Build preflight reuses Story 005/006's `tools/evidence_manifest.py`: each pinned input in the manifest is retrieved
+using its recorded locator and its actual bytes are checked against sha256—the hash is not a retrieval method, and
+HEAD is not used in place of uncommitted content. A mismatch fails, naming the artifact and expected/actual hashes;
+missing files and unresolvable locators also fail.
 
-提交 SHA 与 edition ID 经生成的宏文件 `build-info.tex`（`templates/` 约定同 008，
-FR-D1：宏文件而非内联字符串）进入正文（`\buildcommit`、`\buildedition`），随 PDF
-渲染，可从 pdftotext 取回。宏文件由工具生成，不手改。
+The submission SHA and edition ID enter the manuscript through the generated macro file `build-info.tex` (the
+templates convention is the same as 008, FR-D1: a macro file, not inline strings), via `\buildcommit` and
+`\buildedition`, and are rendered with the PDF so they can be recovered using pdftotext. The tool generates the
+macro file; do not edit it by hand.
 
-**文献冻结语义**：`freeze` 把 bib 字节钉为带日期版本；其后的构建核对当前 bib 的
-sha256。冻结后被修改的 bib **绝不静默采用**——默认失败并显式报告差异（冻结日期、
-冻结/当前哈希）；`--use-frozen` 显式选择用冻结版本构建，同样打印差异报告。改用新
-文献版本的唯一路径是重新 `freeze` 一个新的带日期版本。
+**Bibliography freeze semantics**: `freeze` pins the bib bytes as a dated version; subsequent builds check the
+current bib's sha256. A bib modified after freezing is **never silently adopted**—by default, the build fails and
+explicitly reports the difference (freeze date, frozen/current hashes); `--use-frozen` explicitly selects building
+with the frozen version and prints the same difference report. Re-freezing a new dated version is the only way to
+adopt a new bibliography version.
 
-**失败语义（不产出被声称为成功的 PDF）**：pdflatex/bibtex 非零退出、日志中的
-`Citation '…' undefined` / 未定义引用、bibtex 缺条目——构建失败并点名引用键；
-任何失败路径都会删除输出目录内全部 PDF。消费者可见错误（退出码 2，stderr 一行）。
-绿灯还需两点实际核验：渲染 PDF（pdftotext）确实含有 commit SHA 与 edition ID
-（手稿必须 `\input{build-info.tex}` 并使用 `\buildcommit`/`\buildedition`，否则
-不亮绿灯）；首轮 `.aux` 的 `\bibdata` 请求的正是冻结的 `--bib` 文件——bibtex 的
-BIBINPUTS 只指向构建目录里的冻结副本，请求其他 bib 即失败，冻结外无解析路径。
+**Failure semantics (no PDF claimed as successful is produced)**: nonzero pdflatex/bibtex exit, log entries such
+as `Citation '…' undefined` / undefined citations, or missing bib entries cause build failure, naming the citation
+key; every failure path deletes all PDFs in the output directory. The consumer-visible error uses exit code 2 and
+one stderr line. Two further checks are required for a green result: the rendered PDF (via pdftotext) actually
+contains the commit SHA and edition ID (the manuscript must `\input{build-info.tex}` and use
+`\buildcommit`/`\buildedition`, otherwise it does not pass); and the first-pass `.aux` requests exactly the frozen
+`--bib` file via `\bibdata`—bibtex's BIBINPUTS points only to the frozen copy in the build directory, and a
+request for any other bib fails, with no resolution path outside the freeze.
 
-**边界（绿灯 ≠ 正确性）**：绿灯构建只证明 plumbing——不证明科学正确性、不证明
-claim–evidence 一致、不证明语言/图形质量；构建门从不运行科学计算；claim–evidence
-map（FR-A3）在构建门之上。复现检查（FR-D4 清洁环境重建）属 Story 015，不在本门
-范围；本门不自动采用任何新材料、不重算、不抓取外部引用。
+**Boundary (green ≠ correctness)**: a green build proves plumbing only—it does not prove scientific correctness,
+claim–evidence consistency, or language/figure quality. The build gate never runs scientific computation;
+the claim–evidence map (FR-A3) sits above the build gate. The reproduction check (FR-D4 clean-environment rebuild)
+is Story 015 and outside this gate's scope. This gate does not automatically adopt new material, recompute, or
+fetch external citations.
 
-## 使用
+## Usage
 
 ```sh
-# 生成干净副本（工作稿永不修改）；默认在工作副本上独立 pdflatex 编译一次（--no-compile 跳过）
+# Generate a clean copy (the working draft is never modified); by default, independently compile the working copy once with pdflatex (--no-compile skips this)
 python tools/evidence_export.py export main.tex --output-dir clean-export \
     [--copy refs.bib --copy figures/fig1.pdf] [--strip-metadata evidence-metadata.tex] \
     [--private-marker /private/path/substring]...
 
-# 对导出树做泄漏检查（消费者可见 pass/fail，失败附 文件:行号）
+# Check the export tree for leaks (consumer-visible pass/fail; failures include file:line)
 python tools/evidence_export.py leak-check clean-export [--private-marker STRING]...
 ```
 
-导出复制入口 .tex 及其 `\input`/`\include` 引用的本地文件（限制在稿件目录内解析，
-越界拒绝），加上 `--copy` 指定的附加文件（.bib、图等）。
+The export copies the entry `.tex` and local files referenced by its `\input`/`\include` commands (resolution is
+restricted to the manuscript directory; escapes are rejected), plus additional files specified with `--copy`
+(`.bib`, figures, etc.).
 
-## 剥离边界（只认专用证据元数据模式，不做通用 TeX 变换）
+## Stripping boundary (only the dedicated evidence-metadata pattern is recognized; no general TeX transformation)
 
-剥离且仅剥离：
+Strip only:
 
-1. 每个 `\evidenceblock{ID}` 调用（整行只有该调用时保留换行）；
-2. 生成的 `evidence-metadata.tex` 文件本身（不进入导出；`--copy` 指到它即拒绝）；
-3. 引入它的 `\input`/`\include` 命令——专用于 metadata 的引入与其他 TeX 同行时
-   只删命令本身，行的其余部分原样保留。
+1. Each `\evidenceblock{ID}` invocation (if the entire line contains only that invocation, preserve the newline);
+2. The generated `evidence-metadata.tex` file itself (it is not included in the export; passing it to `--copy` is rejected);
+3. The `\input`/`\include` command that includes it—if a metadata-only include shares a line with other TeX, remove
+   only the command and preserve the rest of the line exactly.
 
-文件以**二进制读写**处理：不发生任何换行符规范化，CRLF/CR/LF 手稿逐字节保留。
-`\input`/`\include` 解析到稿件目录之外且确实存在时，loudly 拒绝（不静默省略）。
+Files are processed using **binary I/O**: no newline normalization occurs; manuscript CRLF/CR/LF is preserved
+byte for byte. If `\input`/`\include` resolves outside the manuscript directory and the target exists, fail loudly
+(do not silently omit it).
 
-公开内容逐字节保留：正文、公开 citation、数据/代码可用性语句、图表、`--copy` 文件。
-`verbatim` 类环境中出现 `\evidenceblock` 不做改写—— loudly 失败并指出位置
-（证据块是草稿边注宏，不是 verbatim 内容）。
+Public content is preserved byte for byte: body text, public citations, data/code availability statements, figures
+and tables, and `--copy` files. An `\evidenceblock` inside a `verbatim`-class environment is not rewritten; instead,
+fail loudly and identify its location (evidence blocks are draft margin-note macros, not verbatim content).
 
-## 泄漏检查
+## Leak check
 
-扫描导出树（跳过二进制图片/PDF）中的固定标记：`evidenceblock`、
-`evidence-metadata`、`evidence-manifest`、`evidence-snapshots`，以及调用方经
-`--private-marker`（可重复）显式传入的私有路径子串——调用方负责把自己的私有根
-传入；命中任一即失败（退出码 2），逐条给出 `文件:行号` 与命中模式；无残留则
-pass。`export` 自身在编译成功后运行同一检查（含同样的 `--private-marker`），
-泄漏即整体失败（导出目录保留供检查）。
+Scan the export tree (skipping binary images/PDFs) for fixed markers: `evidenceblock`, `evidence-metadata`,
+`evidence-manifest`, `evidence-snapshots`, and private-path substrings explicitly supplied by the caller via
+repeatable `--private-marker` arguments—the caller is responsible for passing its own private roots. Any match
+fails with exit code 2 and reports each `file:line` and matching pattern; no residue passes. After compilation
+succeeds, `export` runs the same check itself (including the same `--private-marker` arguments); a leak fails the
+whole operation, leaving the export directory available for inspection.
 
-## 不变量
+## Invariants
 
-- 构建门（014）：输出目录已存在即拒绝（每次构建都是新鲜构建树）；pinned 输入按 locator 取回的字节核验，失败不编译；宏文件只由工具生成。
-- 工作稿字节不变（导出只读工作副本、只写新目录；`--output-dir` 已存在即拒绝）。
-- 导出源在其自身目录独立编译成功。
-- 无证据构造的普通稿件导出与输入正文等价，泄漏检查通过。
+- Build gate (014): refuses if the output directory already exists (each build uses a fresh build tree); pinned inputs are retrieved by locator and verified; failure prevents compilation; the macro file is generated only by the tool.
+- Working-draft bytes remain unchanged (export reads the working copy and writes only a new directory; refuses if `--output-dir` already exists).
+- The exported source compiles successfully when compiled independently in its own directory.
+- Exporting an ordinary manuscript with no evidence constructs produces body text equivalent to the input, and passes leak checking.

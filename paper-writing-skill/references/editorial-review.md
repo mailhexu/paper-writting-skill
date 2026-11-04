@@ -1,121 +1,163 @@
 ---
-description: 编辑评审阶段说明 — 类型化科学评审与编辑评审清单、finding 格式、prune proposal、图形评审试点 gate
+description: Editorial-review stage guide — typed scientific and editorial checklists, finding format, prune proposals, and figure-review pilot gate
 ---
 
-# 阶段说明：编辑评审 — 类型化科学/编辑评审、prune proposal、图形评审（FR-A6/A7，FR-C1/C3 试点 gate）
+# Stage guide: Editorial review — typed scientific/editorial review, prune proposals, figure review (FR-A6/A7, FR-C1/C3 pilot gate)
 
-本 reference 覆盖完整稿的结构性评审：独立科学评审与独立编辑评审的清单化
-pass（FR-A6）、逐项可确认的 prune proposal（FR-A7）、以及图形评审的试点
-gate（FR-C1 overlay + 内置清单 + 最终尺寸视觉检查）。评审只产出 findings
-与 proposals 交作者决定；不改手稿、不裁决科学内容、不晋升任何永久规则、
-不新增机械 checker。
+This reference covers structural review of a complete draft: checklist passes for independent
+scientific and independent editorial review (FR-A6), itemized prune proposals for author
+confirmation (FR-A7), and the figure-review pilot gate (FR-C1 overlay + built-in checklist +
+final-size visual inspection). Reviews produce findings and proposals for the author to decide;
+they do not edit the manuscript, adjudicate scientific content, promote permanent rules, or add
+mechanical checkers.
 
-## 输入
+## Inputs
 
-- 结构修订后的完整稿（已经过 drafting.md 的整稿语言 pass）。
-- 已确认的 Paper Plan：贡献陈述、段落级提纲（各段预期要点）、claim–evidence map。
-- 证据清单中的 artifact ID（FR-D2/D5）；工作稿中的 `\evidenceblock` 意图/证据
-  边注（FR-D5，含 intent 注解）。
-- 作者逐篇图形约定 overlay（如有）；全局图形缺省 figure-style.md。
+- The complete draft after structural revision and the whole-draft language pass in `drafting.md`.
+- The confirmed Paper Plan: contribution statement, paragraph-level outline (intended point of
+  each paragraph), and claim–evidence map.
+- Artifact IDs in the evidence manifest (FR-D2/D5), adjacent `\evidenceblock` IDs in the draft,
+  and their recorded intent/provenance in the manifest or generated non-rendered JSON metadata.
+- The paper-specific figure-convention overlay, if any; otherwise the global figure defaults in
+  `figure-style.md`.
 
-## Finding 格式（FR-A6，两类评审共用）
+## Finding format (FR-A6, shared by both review types)
 
-每个 finding 逐条记录：
+Record each finding separately:
 
-- **位置**：稿内句子或段落（逐字引用关键句）；
-- **关联依据**：计划项（提纲条目）和/或 artifact ID——**仅在真实存在时引用**；
-  纯语言、结构、清晰度问题明确标注"语言/编辑类，无 artifact 关联"，不虚构 ID；
-- **类型**：scientific 或 editorial；
-- **问题**：措辞/范围/语言/结构缺陷的具体说明；
-- **建议**：修改建议文字；科学类建议不改科学内容本身。
+- **Location:** quote the key sentence verbatim and identify its manuscript sentence or paragraph.
+- **Supporting reference:** a Plan item (outline entry) and/or artifact ID—**only when it truly
+  exists**. For pure language, structure, or clarity issues, explicitly mark "language/editorial;
+  no artifact association"; do not invent an ID.
+- **Type:** `scientific` or `editorial`.
+- **Issue:** describe the specific wording/scope/language/structure defect.
+- **Recommendation:** proposed revision; a scientific recommendation must not change scientific
+  content itself.
 
-科学评审与编辑评审**独立运行**、各自成清单；随后由单一 integrating writer
-汇总为不冲突的集成建议。writer 只做集成，不做以下事情：擅自裁决科学分歧
-（分歧 finding 标记 `author-arbitration` 并列双方依据，交作者）、把编辑类
-建议伪装成科学判断、或在集成时降低任何 finding 的证据等级。
+Scientific and editorial reviews run **independently** and produce separate lists. A single
+integrating writer then consolidates them into a non-conflicting set of integration
+recommendations. The writer integrates only; they do not unilaterally adjudicate scientific
+disagreements (mark a disagreement finding `author-arbitration`, list the grounds on each side,
+and refer it to the author), disguise editorial recommendations as scientific judgments, or
+lower the evidence level of any finding during integration.
 
-## 科学评审清单（FR-A3/SPEC-004 边界）
+## Scientific review checklist (FR-A3/SPEC-004 boundary)
 
-逐项核对，每项产出 finding 或记录"通过"：
+Check each item and either produce a finding or record that it passes:
 
-1. 每个承载结论的陈述与 claim–evidence map 中的证据匹配；措辞强度不超过
-   证据支持的范围（比较条件、近似阶数、体系范围如实陈述）。
-2. 标签判断的是**稿件陈述的措辞与范围**，不是底层假设本身的真伪；科学评审
-   不重新做科学，也不因不喜欢结论而要求删除。
-3. 反驳/负面结果按其记录的可采性使用：一个 REFUTE 标签下的反面结果，若稿件
-   用它论证"方法边界/适用限制"，该论证**保留**——反例支持边界表述，不是缺陷。
-4. supersession：新结果使旧结果过时处，稿件是否已按当前采用版本表述；
-   未更新的标 finding 交作者，不自动改写。
-5. 未验证的机制是否明确作为假设/推测表述，未被语言流畅性提升证据等级。
-6. Abstract/Conclusion 的具体程度与证据一致，无超出证据的数字或普适性。
+1. Each conclusion-bearing statement matches evidence in the claim–evidence map; wording strength
+   does not exceed the supported scope (state comparison conditions, approximation order, and
+   system range accurately).
+2. Labels assess the **wording and scope of the manuscript statement**, not the truth of an
+   underlying assumption. Scientific review does not redo the science or demand deletion because
+   a reviewer dislikes a conclusion.
+3. Use refuting/negative results according to their recorded admissibility. If a negative result
+   under a REFUTE label is used by the manuscript to argue for a "method boundary/applicability
+   limitation," **retain that argument**: a counterexample can support a boundary statement and is
+   not a defect.
+4. Supersession: where new results make old ones obsolete, check whether the manuscript reflects
+   the currently adopted version. Refer an unupdated statement as a finding to the author; do not
+   rewrite it automatically.
+5. State unverified mechanisms explicitly as hypotheses/speculation; fluent wording must not raise
+   their evidence level.
+6. Keep the specificity of the Abstract/Conclusion consistent with the evidence; no unsupported
+   numbers or generality.
 
-## 编辑评审清单
+## Editorial review checklist
 
-逐项核对（语言完整性的缺陷类别与豁免清单以 drafting.md FR-B4/B5 为准，
-此处按 finding 格式记录，不重复其指导）：
+Check each item. Use the FR-B4/B5 language-completeness defect classes and exemptions in
+`drafting.md`; record issues here in finding format rather than repeating that guidance:
 
-1. 各节是否共同推进同一主线；每段是否承担提纲中该段的预期要点。
-2. 论证顺序：先问题/比较条件，后证据解读；无研究日志顺序残留。
-   按 [drafting.md 的受众转换检查](drafting.md#从计划到正文改变受众) 区分科学论证
-   与内部设计叙述：Introduction 是否解释动机、已有工作与贡献，并以章节路线
-   而非图形目录收尾；figure briefs、审批/待办是否留在工作台，必要科学限定是否保留。
-3. 观察/解释区分；限制与适用边界是否在 Discussion 明确。
-4. 重复表述：同一论证在不同节重复展开（交 prune proposal 处理，不直接删）。
-5. 图文分工：正文不逐行复述表格/逐点朗读曲线；图注说明读图方式；
-   caption 中不出现实现名（脚本/包/格式 → Methods）。
-6. 术语先定义后使用、单一代词指向、时态一致（FR-B5 整稿 pass 的遗留 finding
-   在此按格式收录）。
-7. 对照当前 Plan/skeleton 而非 superseded 设计；设计已同意不代表数据、产出或
-   视觉评审已完成。依赖科学争议的项交作者判断，不连带重开无关已确认内容。
+1. Do all sections advance the same storyline, and does each paragraph serve its intended point
+   in the outline?
+2. Argument order: question/comparison conditions before evidence interpretation; no residue of
+   research-log order. Use the [audience-shift check in drafting.md](drafting.md#from-plan-to-prose-changing-the-audience)
+   to distinguish scientific argument from internal design narration. Does the Introduction
+   explain motivation, prior work, and contribution, and close with a section route rather than a
+   figure catalog? Are figure briefs, approvals, and TODOs kept in the workspace, with necessary
+   scientific qualifications retained?
+3. Are observation and interpretation distinguished, with limitations and applicability
+   boundaries explicit in the Discussion?
+4. Repetition: is the same argument developed in multiple sections? Handle this through a prune
+   proposal; do not delete directly.
+5. Division between figure and prose: does the prose avoid restating tables line by line or
+   reading curves point by point? Do captions explain how to read the figure? Are implementation
+   names absent from captions (script/package/format details belong in Methods)?
+6. Are terms defined before use, pronouns unambiguous, and tense consistent? Record any remaining
+   finding from the FR-B5 whole-draft pass in this format.
+7. Does the draft match the current Plan/skeleton rather than superseded designs? Agreement on a
+   design does not mean data, output, or visual review is complete. Refer items dependent on
+   scientific disagreement to the author; do not reopen unrelated confirmed content.
+8. **Evidence adjacency and rendered annotations:** for every actual figure, table, and
+   load-bearing numerical claim, check that the corresponding adopted source is represented by
+   an adjacent evidence block. A successful compile does not demonstrate evidence coverage. Check
+   that gray annotations are readable at their rendered size, and that the display-off/export
+   behavior works as specified in [the evidence-projection guide](evidence-projection.md).
+   Record gaps or rendering failures as findings; do not treat projection as automatic adoption
+   or certification of evidence coverage.
 
-## Prune proposal（FR-A7）
+## Prune proposal (FR-A7)
 
-触发点：每个完整稿修订周期结束时、以及提交打包前，各一次。
+Trigger once at the end of each complete-draft revision cycle and once before submission packaging.
 
-**提议前必读 intent（FR-D5）**：逐候选对照其 `\evidenceblock` intent 注解。
-相似内容可能服务不同目的（如一处隔离贡献、另一处建立有效性边界）——外观
-相似不等于论证重复。intent 仍与文本/证据相符的内容**不作为孤儿/冗余提议**；
-intent 与文本或证据不符时，标记"intent 待作者确认"，不静默重定义、不静默删除。
+**Read intent before proposing a prune (FR-D5):** resolve each candidate's block ID against
+the authoritative claim–evidence manifest (or generated non-rendered JSON), rather than looking
+for intent in the short rendered note. Similar-looking passages may serve different purposes.
+Content whose intent still matches the text/evidence is **not proposed as orphaned/redundant**.
+If intent and text/evidence differ, mark "intent requires author confirmation"; do not silently
+redefine or delete it. Select "no intent annotation" only when the underlying record has none.
 
-逐项记录：
+Record each proposal separately:
 
-- **位置**：节/段落/图/表；
-- **理由**：与另一段重复（指明对方位置）/ 被后续 finding 取代 / 临时脚手架 /
-  孤儿 claim（已不被确认的贡献需要）/ 低于篇幅预算价值；
-- **处置建议**：删除 / 合并（并入何处）/ 降级（如移入 SI 或附录）；
-- **intent 核对结果**：intent 相符（不提议）/ intent 待作者确认 / 无 intent 注解。
+- **Location:** section/paragraph/figure/table.
+- **Reason:** repetition of another passage (identify its location) / superseded by a later finding
+  / temporary scaffolding / orphan claim (no longer needed for a confirmed contribution) / value
+  below the length budget.
+- **Proposed action:** delete / merge (state destination) / downgrade (for example, move to SI or
+  appendix).
+- **Intent check:** intent matches (do not propose) / intent requires author confirmation / no
+  intent annotation.
 
-**确认粒度**：作者逐项确认，或在明确列出的项批次内一次确认；proposal 不得
-把未列出的项捆绑进批次。**拒绝留档**：被拒绝的项记录（项、理由、拒绝日期），
-后续周期不再重复提出，除非带来新理由——新理由须写明与原理由的差异。
+**Confirmation granularity:** the author confirms proposals individually or in a batch of
+explicitly listed items; do not bundle unlisted items into a batch. **Record rejections:** retain
+the rejected item, reason, and rejection date. Do not propose it again in a later cycle unless
+there is a new reason; state how that reason differs from the original.
 
-不以字数减少、编译成功、lint 无警告作为 prune 正确性或写作质量的证明。
+Word-count reduction, successful compilation, or absence of lint warnings does not prove that
+pruning is correct or that the writing is good.
 
-## 图形评审（FR-C1/FR-C3 试点 gate）
+## Figure review (FR-C1/FR-C3 pilot gate)
 
-对每张图，依次：
+For every figure, proceed as follows:
 
-1. **逐篇 overlay 优先**：存在该篇图形约定 overlay 时，以其为准；无 overlay
-   处退回全局缺省（figure-style.md）。评审对照 overlay 决议，不重新谈判已
-   由作者决定的约定。
-2. **FR-C1 惯例清单**：无 in-figure 标题；panel 标签加粗左上、`(a)/(b)` 全篇
-   一致；无逐柱标注/marker 标签/背景参考线（物理特征例外且由 caption 引入）；
-   caption 无实现名。
-3. **实际渲染输出审阅**：对照编译/导出后的真实图像审阅，不审源码代替。
-4. **最终尺寸视觉检查（试点 gate，记录在案）**：按目标版式列宽（86/90/89 mm）
-   实际尺寸渲染后目检：字号、线宽、色彩在最终尺寸下可读；记录检查结果。
-5. **figure-gate（如已安装）仅作可选对比输入**：其输出作为 findings 附入，
-   与内置清单结论并列；不因工具存在而强制运行，不以其 PASS 代替目检；
-   不自建重复的 JSON checker（SPEC-001）。
+1. **Paper-specific overlay first:** use the paper's figure-convention overlay when one exists;
+   otherwise fall back to global defaults (`figure-style.md`) where the overlay is silent. Review
+   against the overlay decision; do not renegotiate conventions already decided by the author.
+2. **FR-C1 convention checklist:** no in-figure title; panel labels bold at upper left and `(a)/(b)`
+   consistent throughout; no per-bar labels/marker labels/background reference lines (except
+   physical features introduced in the caption); no implementation names in captions.
+3. **Review actual rendered output:** inspect the real image after compile/export, not source code
+   as a substitute.
+4. **Final-size visual check (documented pilot gate):** render at the target layout's column width
+   (86/90/89 mm) and visually inspect at actual size. Record whether type size, line width, and
+   colors are readable at final size.
+5. **`figure-gate`, if installed, is optional comparative input only:** append its output as
+   findings alongside the built-in checklist. Tool availability does not require running it; PASS
+   does not replace visual inspection. Do not build a duplicate JSON checker (SPEC-001).
 
-图形评审只提出 findings 与修改建议；不自动重画、不自动改图。数学式、坐标
-轴标签、常规 caption 标题按 drafting.md 豁免清单处理，不按缺陷报告。
+Figure review proposes findings and changes; it does not redraw or edit figures automatically.
+Treat equations, axis labels, and conventional caption titles according to the exemptions in
+`drafting.md`; do not report them as defects.
 
-## 边界（本 reference 刻意不覆盖）
+## Boundary (intentionally outside this reference)
 
-- 整稿语言 pass 的指导与 FR-B4/B5 缺陷/豁免清单：起草阶段
-  （references/drafting.md）；本阶段按 finding 格式收录其结果。
-- manuscript 文件写入、科学内容裁决、自动删改、Vale 规则晋升、新 checker：
-  一律不做；检查报告与作者决定分离（架构 ADR-004/ADR-006）。
-- 证据版本固定与新鲜度检查：证据检查阶段（references/evidence-manifest.md）；
-  本阶段引用其 artifact ID，不重复其校验。
+- Whole-draft language-pass guidance and FR-B4/B5 defect/exemption lists: drafting
+  (`references/drafting.md`); record its results here in finding format.
+- Manuscript file edits, scientific adjudication, automatic deletion/revision, Vale-rule promotion,
+  or new checkers: out of scope. Keep review reports separate from author decisions
+  (architecture ADR-004/ADR-006).
+- Evidence-version pinning and freshness checks: evidence-check stage
+  (`references/evidence-manifest.md`); cite its artifact IDs rather than repeating its
+  verification. Manuscript integration still preserves/rebuilds adjacent evidence blocks and
+  generated metadata; use `evidence-projection.md` and the editorial checklist above to assess
+  rendered annotations and actual source adjacency.

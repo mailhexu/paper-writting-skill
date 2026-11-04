@@ -3,7 +3,7 @@ name: figure-style
 description: Use when creating or revising matplotlib figures destined for physics or scientific-software journal papers (Physical Review, Computer Physics Communications, npj Computational Materials). Encodes publication-grade figure construction — no chart titles, print-size typography, colorblind-safe palettes, vector output — plus the pilot verification pass (built-in checklist + final print-size visual inspection). Defers to the author's per-paper conventions; this global reference is the fallback, not the override.
 ---
 
-# 图形风格（全局缺省；逐篇约定可覆盖）
+# Figure Style (Global Default; Per-Paper Conventions May Override)
 
 **Status: input-status statement.** This reference is the revised figure-style
 draft adopted per Story 003 (ADR-006 conflicts corrected). It does **not**
@@ -13,17 +13,12 @@ AI-imagery policy gate are **not implemented** (post-pilot items, PRD decision
 print-size visual inspection below; `figure-gate` is an *optional comparison*,
 never a second mandatory gate.
 
-## 约定层级与 deference（FR-C1 overlay）
+## Convention Hierarchy and Deference (FR-C1 Overlay)
 
-1. **逐篇约定是缺省，不是建议。** 作者的 per-paper 约定（managed library 中
-   的 per-paper 技能与笔记，以及记录在论文工作台 `paper/<paper-id>/` 的逐篇
-   约定——overlay）优先于本 reference 的每一条全局规则。
-2. **缺省回落。** 某篇论文没有相应 overlay 条目时，回落到本 reference 的全
-   局缺省；不要为缺项发明规则。
-3. **冲突先提出。** 本 reference 与某篇论文的 overlay 冲突时，按 overlay 执
-   行；若疑似 overlay 有误，向作者提出，不擅自改稿或改 overlay。
-4. 本 reference 不自我扩张：不新增规则库自动增长机制，不把观察到的失败自动
-   晋升为永久 Vale 规则（规则晋升须作者批准，FR-B5/ADR-006）。
+1. **Per-paper conventions are the default, not suggestions.** The author's per-paper conventions (the per-paper skills and notes in the managed library, and per-paper conventions recorded in the paper workbench at `paper/<paper-id>/`—the overlay) take precedence over every global rule in this reference.
+2. **Fall back to the global default.** If a paper has no corresponding overlay entry, use this reference's global default; do not invent a rule to fill a gap.
+3. **Raise conflicts first.** When this reference conflicts with a paper's overlay, follow the overlay; if the overlay seems mistaken, raise it with the author rather than changing the manuscript or overlay unilaterally.
+4. This reference does not expand itself: it adds no automatic rule-library growth and does not promote an observed failure to a permanent Vale rule (promotion requires author approval, FR-B5/ADR-006).
 
 ## Grounding
 
@@ -103,24 +98,18 @@ re-verify the venue pages at submission time.
     reading the pinned evidence edition (the same rule as manuscript numbers).
     No interactive-window exports.
 
-### 来源安全：示意图与外部图（真实来源，不虚构）
+### Source Safety: Schematics and External Figures (Real Sources, No Fabrication)
 
-- 静态示意图（schematics）与外部获得的图必须记录**真实来源**：由哪个工具/
-  哪个版本绘制、或转载自哪篇文献/哪个 URL、许可条件；记录进该论文的图形
-  说明（Methods 或 caption，按期刊惯例与逐篇 overlay），caption/Metadata 中
-  不写不真实的"脚本生成"来源。
-- 不得为满足本 reference 而编造来源、把外部图当作本仓库脚本产物、或把手工
-  图说成脚本生成。来源不明就如实标注来源不明并交作者处理。
-- **AI 生成图像没有 policy gate**：是否允许 AI 生成图形/图形摘要是 post-
-  pilot 决定（PRD 决定 6，Out of Scope）。在作者明确决定前，不引入 AI 生成
-  图形，也不为此设计强制门禁。
+- Record the **true source** of static schematics and externally obtained figures: which tool/version created them, or which publication/URL they were reproduced from, and the license terms. Record this in the paper's figure notes (Methods or caption, according to journal convention and the per-paper overlay); do not falsely describe a source as "script-generated" in a caption or metadata.
+- Do not invent a source to satisfy this reference, present an external figure as a product of a repository script, or describe a hand-drawn figure as script-generated. If the source is unknown, state that honestly and refer it to the author.
+- **There is no policy gate for AI-generated images**: whether AI-generated figures or graphical abstracts are allowed is a post-pilot decision (PRD decision 6, Out of Scope). Do not introduce AI-generated figures or design a mandatory gate for them before the author makes an explicit decision.
 
 ## Base profile
 
 Save as `paper.mplstyle` in the paper repo and apply with
 `plt.style.use('paper')`; per-venue, override only the figure width. (Where a
-per-paper overlay defines its own style, the overlay wins per the 约定层级
-section.)
+per-paper overlay defines its own style, the overlay wins under the Convention
+Hierarchy and Deference section.)
 
 ```ini
 figure.dpi        : 150
@@ -156,7 +145,7 @@ Single-column creation sizes: `figsize=(3.35, 2.1)` (86 mm), `figsize=(3.5,
 `(7.5, …)`, `(7.2, …)`. Height is free; keep panels square-ish only when
 comparing on equal footing.
 
-## Verification pass（试点图形 gate = 内置清单 + 最终视觉检查）
+## Verification Pass (Pilot Figure Gate = Built-in Checklist + Final Visual Inspection)
 
 Run after producing or changing any figure, before it enters the manuscript.
 Mechanical, fail-and-fix — do not waive a failed check for convenience. When
@@ -190,30 +179,31 @@ silently deviate.
    present, matching the figure number; no vector/raster duplication of the
    same figure.
 10. **Provenance**: computed figures regenerated cleanly from their script;
-    schematics/external figures carry their true recorded source (来源安全
-    section); `git status` shows no hand-modified exported file.
+    schematics/external figures carry their true recorded source (see the Source
+    Safety section); `git status` shows no hand-modified exported file.
 11. **Render and inspect**: rasterize the exported PDF (`pdftoppm -png -r
     150`) — or, for permitted raster-only figures, inspect the exported PNG
     directly — and look at the result at approximately final print size — the
     checks above catch named defects; only inspection catches layout ugliness
     (overlapping labels, dead space, unbalanced panels). This final visual
     inspection is part of the pilot gate, not an optional extra.
-
-### figure-gate：仅可选对照
+### figure-gate: Optional Comparison Only
 
 If `figure-gate` (PyPI) happens to be installed, you MAY run it as an
 **optional comparison** and report interesting agreements/disagreements to the
 author. Its FAIL/WARN items are **never** blocking by themselves, this skill
 does not adopt its JSON/severity protocol, and **no duplicate JSON checker is
-built or shipped**. Not installed → say so and move on; installing it just to
-gate figures is out of scope. Any promotion of figure-gate to a mandatory gate
+built or shipped**. If it is not installed, say so and move on; installing it
+just to gate figures is out of scope. Promoting figure-gate to a mandatory gate
 is a post-pilot decision requiring owner approval.
 
-### 评审边界：不是语言缺陷
+### Review Boundary: Not a Language Defect
 
-常规图注标题（"Fig. 1"、"(a)"）、数学简写（$J_1$、$E_F$）与坐标/面板标签
-**不是破碎语言**，评审与机械检查不得把它们当作语言失败上报（ADR-006）。本
-reference 不产生任何永久语言规则，也不设规则库自动增长路径。
+Conventional figure-caption labels ("Fig. 1", "(a)"), mathematical
+abbreviations ($J_1$, $E_F$), and axis/panel labels are **not broken language**;
+reviews and mechanical checks must not report them as language failures
+(ADR-006). This reference creates no permanent language rules and no automatic
+rule-library growth path.
 
 ## Venue deltas
 
@@ -231,8 +221,8 @@ where they conflict.
 
 - **Author's per-paper convention skills** (`tmtmfeo3-paper-figures`,
   `tmfeo3/spinphon-manuscript-conventions` in the managed library) and per-
-  paper overlays recorded in the workbench: authoritative for their papers;
-  this reference defers to them (see 约定层级).
+  paper overlays recorded in the workbench are authoritative for their papers;
+  this reference defers to them (see Convention Hierarchy and Deference).
 - **Public figure skills** (checked 2026-10-16 via skills.sh):
   `k-dense-ai/scientific-agent-skills/matplotlib` (2.1K installs) is generic
   matplotlib API guidance; `nature-figure` (yuan1z0825/nature-skills, 17.9K

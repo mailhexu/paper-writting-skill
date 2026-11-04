@@ -1,94 +1,61 @@
-# 阶段说明：材料/计划
+# Stage Guide: Materials and Planning
 
-从既有研究记录出发，为一篇论文组织材料集合与写作计划。本阶段只组织与
-建议：不改手稿、不运行科学计算、不迁移或改写原始笔记。
+Starting from existing research records, organize a materials set and writing plan for a paper. This stage organizes and recommends only: it does not edit the manuscript, run scientific computations, or migrate or rewrite original notes.
 
-## 输入
+## Inputs
 
-- 既有研究记录：Kosmic 项目笔记、实验/计算 artifacts、失败尝试（失败记录
-  同样是材料，可能支撑方法边界或反例论证）。
-- 输入材料不要求已有哈希或机器元数据：从其他计算复制的数值结果、手工整理
-  的表格、手绘示意图、手工推导等同样是合法材料。已知时如实记录实际来源与
-  所做的变换（何时何地取得、经过什么处理）；来源未知就如实标"未知"，不虚构
-  运行元数据。哈希登记属后续采用阶段，且哈希证明的是字节一致，不等于计算
-  可复现或科学有效性。
-- 作者给定的论文目标：贡献陈述、目标期刊/文章类型（若已定）。
-- 作者既有的写作与图形约定：作为缺省遵循的惯例，不是建议。
+- Existing research records: Kosmic project notes, experiment/computation artifacts, and failed attempts (failed records are materials too; they may support methodological boundaries or counterexample arguments).
+- Input materials need not already have hashes or machine metadata: numerical results copied from other computations, manually curated tables, hand-drawn diagrams, and hand derivations are all valid materials. When known, record the actual source and transformations honestly (when and where obtained, and how processed); when unknown, say "unknown" rather than inventing run metadata. Hash registration belongs to the later adoption stage, and a hash proves byte identity, not computational reproducibility or scientific validity.
+- The author's paper goals: contribution statement and target journal/article type, if already decided.
+- The author's existing writing and figure conventions: follow these by default; they are not suggestions.
 
-## 先明确论文定位
+## Positioning the Paper
 
-复用作者已给的信息，提出一张简短定位卡：科学问题、目标读者及其关心的理由、
-文章类型、具体增量、最接近的已有工作、范围边界。定位卡不是最后才写的 Abstract，
-也不是逐字段问卷；只问会实质改变论文方向的缺项。已有 Plan 时沿用当前决定。
-最接近的文献从此时关联到具体定位/claim；未核实的来源或新颖性如实标明，
-不制造引文，也不因仓库没有某实现就推断学术优先权。
+Reuse information the author has already supplied to propose a short positioning card: scientific question, target readers and why they care, article type, specific increment, closest prior work, and scope boundaries. This is not a final Abstract or a field-by-field questionnaire; ask only about missing information that would materially change the paper's direction. If a Plan already exists, carry forward its current decisions.
 
-## 材料条目的组织
+Associate the closest literature with the specific positioning or claim from the outset. Mark unverified sources or novelty claims honestly; do not invent citations or infer scholarly priority from the absence of an implementation in the repository.
 
-- **一块材料 = 一个清晰想法**：一条结论、一张图、一组对照、一个已知限制。
-  不强制对应段落或章节。
-- 每条材料分开记录三类信息，不得混写：
-  - **使用意图**：本文为什么需要它、放在论证的哪一步（属于本篇论文）；
-  - **证据情况**：来源记录、新鲜度/可取回性；已知的状态如实记录，未做哈希
-    登记的可取回性标"未知"（哈希登记属后续阶段）；
-  - **采用决定**：当前是 `候选 / 采用 / 暂不采用`，暂不采用须留一句理由。
-- 反例、限制与失败对照必须进入材料集合并约束计划；不得为叙事流畅而隐藏。
-- 认可一条材料的科学内容，不等于接受其原始表述；措辞属于后续起草阶段。
+## Organizing Material Entries
 
-## 阶段内允许的动作
+- **One material = one clear idea**: a conclusion, figure, comparison, or known limitation. It need not correspond to a paragraph or section.
+- Record three kinds of information separately for each item; do not conflate them:
+  - **Use intent**: why the paper needs it and which step of the argument it serves (specific to this paper);
+  - **Evidence status**: source record, freshness, and retrievability; record known status honestly, and mark retrievability "unknown" if it has not been hash-registered (hash registration belongs to a later stage);
+  - **Adoption decision**: current state is `candidate / adopted / not adopted`; leave one sentence explaining a "not adopted" decision.
+- Counterexamples, limitations, and failed comparisons must be included in the materials set and constrain the plan; do not hide them for narrative smoothness.
+- Accepting the scientific content of a material does not mean accepting its original wording; wording belongs to the later drafting stage.
 
-- 通读相关记录，提出材料清单与组织建议（含主线方向的一句话概括，若有把握）。
-- 标出证据缺口，按下节区分取回/关联问题与新研究，不把每个缺口都改成计算任务。
-- 与作者逐项确认材料清单；一次确认可以覆盖一批材料，不新增逐卡审批流程。
+## Permitted Actions in This Stage
 
-## 缺失材料与待办
+- Read relevant records and propose a materials list and organization (including a one-sentence summary of the main line when well-supported).
+- Identify evidence gaps and distinguish retrieval/linkage problems from new research, rather than turning every gap into a computation task.
+- Confirm the materials list with the author item by item; one confirmation may cover a batch of materials. Do not add a per-card approval process.
 
-在工作台维护一份源链接明确的 TODO：区分已有但尚未关联/需取回的结果、真正
-缺失的证据、只有采用某论点才需要的新工作，以及作者已交其他执行者的工作。
-注明缺什么、负责人（未知就标未知）及下一动作；条件任务保持条件性，不重复建单。
-已委派的工作保持 pending，直到返回证据经审阅并采用；不重复运行、不凭委派
-推断结果或实现缺失。作者报告的实现状态与某条曲线的来源关联分别记录。
-数值结论及依赖图等待证据；有支持的非数值部分可按已批准范围继续规划/起草。
-验证要求不因数据未回而豁免，任何科学计算仍须独立授权。
+## Missing Material and Follow-up
 
-## 阶段出口
+Maintain a TODO in the workbench with explicit source links. Distinguish results that already exist but are not yet linked or need retrieval, genuinely missing evidence, new work needed only if a particular argument is adopted, and work the author has assigned to another executor. State what is missing, who owns it (use "unknown" if not known), and the next action; keep conditional tasks conditional and do not create duplicate tasks.
 
-作者确认的材料集合 + 简短论文定位及已有的贡献/图表/章节设想，记录进工作台
-中心页（`review.md`）并链接同一份 Paper Plan。这是起草 reference 的规划输入，
-不要求先交付完整 Plan；主线、章节/图形和段落在其中逐层细化并联合确认。
+Delegated work remains pending until returned evidence has been reviewed and adopted; do not rerun it, infer results from the delegation, or implement what is missing. Record author-reported implementation status separately from the source linkage for any given curve.
 
-## 工作台中心页约定（`paper/<paper-id>/review.md`）
+Numerical claims and dependent figures wait for evidence; supported non-numerical portions may proceed within the approved scope. Verification requirements are not waived because data have not returned, and any scientific computation still requires separate authorization.
 
-每篇论文一个中心页：vault Project 内的
-`Projects/paper-writing-skill/paper/<paper-id>/review.md`（`<paper-id>` 用受限
-ASCII：字母、数字、连字符）。它位于 OKF `notes/` 之外：不是知识正文，也不是
-手稿，只是一个动态的组织视图。
+## Stage Exit
 
-- **原位引用，不迁移。** 原子笔记一律留在原处；中心页用普通 wikilink 引用
-  （基名可能有歧义时用 vault 全路径目标，如
-  `[[Projects/TB2J/notes/xxx|xxx]]`），按需用 `![[...]]` 嵌入审阅。不镜像
-  知识正文，不建自动同步、监听或反向写回。
-- **论文专属材料笔记是例外。** 放 `paper/<paper-id>/pieces/`，仅在拟用内容
-  需要独立组织或需较多论文专属说明时创建；一块材料一个清晰想法，不复制原始
-  笔记已有的知识正文。
-- **意图 / 证据 / 决定三分。** 每条材料在链接旁分开记录，不得混写：使用意图
-  （本篇论文为什么需要它、用于论证哪一步）；证据情况（来源记录、新鲜度；
-  已知的如实记录，未做哈希登记的可取回性只标"未知"）；采用决定
-  （`候选 / 采用 / 暂不采用`，暂不采用留一句理由，无实质新理由不再重复
-  推荐）。
-- **待判断项单独列出**，不预设为已采用；科学内容认可不等于接受原措辞。
-- **一次确认一组材料**，不新增逐卡审批系统。确认材料组与论文定位后，沿用同一
-  Paper Plan 按 [drafting.md](drafting.md) 的顺序讨论主线与提纲；不提前要求完整
-  章节/图形/段落计划，也不将候选材料当作已确认输入。
-- **确认前一切是建议。** 代理给出的材料组织、使用意图、storyline 与图形/
-  风格建议在作者确认前不是作者的科学决定，不得当作已采纳。
-- **建议先行，不联动改稿。** 源笔记或使用意图变化只产生影响建议；作者要求
-  更改意图或"分离贡献"时，同样先给材料组织建议、逐项等作者确认，绝不联动
-  改稿；代理不因材料变化而改手稿、重算或自动更新任何已写内容。
+Record the author-confirmed materials set, a brief paper position, and existing ideas for contributions, figures, and sections on the workbench hub (`review.md`), and link the same Paper Plan. This is the planning input for the drafting reference, not a requirement to deliver a complete Plan first; the main line, sections/figures, and paragraphs are refined in layers and confirmed collaboratively.
 
-## 边界（本 reference 刻意不覆盖）
+## Workbench Hub Convention (`paper/<paper-id>/review.md`)
 
-- 完整主线与段落级提纲：属于起草阶段，见 [drafting.md](drafting.md)；承接已确认
-  的材料组和论文定位，不在材料阶段预写正文或假定科学决定已确认。
-- 证据版本固定（哈希/清单）：已有 [evidence-manifest.md](evidence-manifest.md)
-  及 `tools/evidence_manifest.py` 的采用/快照接口；本阶段不重复登记或核验。
+Use one hub page per paper, located in the vault Project at `Projects/paper-writing-skill/paper/<paper-id>/review.md`. Use a restricted ASCII `<paper-id>` containing letters, digits, and hyphens. The hub is outside OKF `notes/`: it is neither knowledge prose nor a manuscript, only a dynamic organizational view.
+
+- **Cite in place; do not migrate.** Keep atomic notes where they are; cite them from the hub with ordinary wikilinks (when a basename is ambiguous, use the full vault path as the target, e.g. `[[Projects/TB2J/notes/xxx|xxx]]`), and embed with `![[...]]` when useful for review. Do not mirror knowledge prose or create automatic synchronization, watchers, or write-back.
+- **Paper-specific material notes are an exception.** Put them in `paper/<paper-id>/pieces/` only when the proposed content needs independent organization or substantial paper-specific explanation. One clear idea per material; do not copy knowledge prose already present in the original note.
+- **Separate intent / evidence / decision.** Record each material's three aspects separately beside its link; do not conflate them: use intent (why this paper needs it and which argumentative step it serves); evidence status (source record and freshness; record known status honestly, and use "unknown" for retrievability when not hash-registered); adoption decision (`candidate / adopted / not adopted`, with one sentence for "not adopted" and no repeated recommendation unless there is a substantive new reason).
+- **List undecided items separately**; do not presume they are adopted. Accepting scientific content does not mean accepting its original wording.
+- **Confirm a group at once.** Do not create a per-card approval system. After the material group and paper position are confirmed, continue in the same Paper Plan with the main line and outline in the order described by [drafting.md](drafting.md); do not demand a complete section/figure/paragraph plan early or treat candidate materials as confirmed inputs.
+- **Everything remains a proposal until confirmed.** Before author confirmation, the agent's material organization, use intent, storyline, and figure/style recommendations are not the author's scientific decisions and must not be treated as adopted.
+- **Recommend first; do not propagate changes to the manuscript.** Changes to source notes or use intent produce impact recommendations only. If the author requests an intent change or "separation of contributions", first recommend material organization and wait for the author's item-by-item confirmation; never propagate changes to the manuscript. Material changes do not authorize the agent to edit the manuscript, recompute, or automatically update anything already written.
+
+## Boundaries (Intentionally Out of Scope)
+
+- The complete main line and paragraph-level outline belong to the drafting stage; see [drafting.md](drafting.md). Drafting carries forward the confirmed material group and paper position, and does not pre-write manuscript prose during the materials stage or assume scientific decisions are confirmed.
+- Evidence version pinning (hashes/manifests) is covered by [evidence-manifest.md](evidence-manifest.md) and the adoption/snapshot interface in `tools/evidence_manifest.py`; this stage does not duplicate registration or verification.

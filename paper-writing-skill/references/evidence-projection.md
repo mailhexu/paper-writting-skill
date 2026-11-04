@@ -1,38 +1,82 @@
-# 阶段说明：证据元数据 TeX 投影（Story 008, FR-D5 / ADR-005 / STD-005）
+# Stage guide: Evidence-metadata TeX projection (Story 008, FR-D5 / ADR-005 / STD-005)
 
-配套确定性 helper：`tools/evidence_projection.py`；模板：`templates/evidence-metadata.tex.tmpl`。
-**不属于本阶段**：快照创建（006）、新鲜度检查（007）、清洁导出（009）。
+Deterministic companion helper: `tools/evidence_projection.py`; template:
+`templates/evidence-metadata.tex.tmpl`.
+**Outside this guide's scope:** snapshot creation (006), freshness checks (007), and clean export (009).
 
-## 机制（ADR-005，单一干净方案）
+## Role in manuscript integration
 
-草稿正文只写受限 ASCII 的 `\evidenceblock{ID}`；`evidence-metadata.tex` 由清单 +
-草稿**生成**，在导言区 `\input{evidence-metadata.tex}` 一次。生成文件：
+Evidence projection is not an optional standalone stage to omit during manuscript assembly.
+Whenever authorized work assembles or revises a manuscript, preserve or rebuild its adjacent
+`\evidenceblock` calls and regenerate the metadata from the current evidence manifest and draft.
+Load this guide as part of that integration handoff. The projection presents evidence references;
+it does not adopt evidence, verify scientific claims, or certify coverage.
 
-- 定义 `\evidenceblock{ID}`：灰色（`\color{gray}`）、小号（`\small`）独立段落。
-  **ID 先按 claim id 解析**（FR-D5）：块内容为该 claim 的 intent 注记、claim id、
-  及其引用的每个 artifact 的 source id、locator 描述、commit、短 sha（多 artifact
-  claim 逐条列出）。也接受 artifact id 直接作块 ID。FR-D5 的意图注解走同一可移除
-  灰色层。
-- 定义单一显示开关 `\evidencemarginfalse`：只影响 **PDF 显示**——关掉后 PDF 不
-  出现任何证据内容，其余页面内容不变。开关不等于源码净化（导出见 Story 009）。
-- 自带 `[T1]{fontenc}` 与 `xcolor`（缺失时载入）；正文无需其他导言设置。
+For each actual figure, table, and load-bearing numerical claim, editorial completion checks that
+the corresponding adopted source is represented by an adjacent evidence block. Compile success is
+not evidence that coverage is complete. Inspect the rendered gray note at readable size and
+verify both display-off behavior and clean-export behavior (distinct controls; see below).
 
-## 使用
+## Mechanism (ADR-005, one clean approach)
+
+The draft body contains only restricted-ASCII `\evidenceblock{ID}` calls. Generate
+`evidence-metadata.tex` from the manifest and draft, and `\input{evidence-metadata.tex}` once in
+the preamble. The generated file:
+
+- Defines `\evidenceblock{ID}` as an independent gray (`\color{gray}`, `\footnotesize`) paragraph.
+  Claim IDs resolve first; artifact IDs are also accepted. The visible note contains the ID,
+  edition, one linked source basename and SHA-12. Multi-source claims add a short `+N sources`
+  link to the manifest, not a list of every source. Full intent and provenance stay out of view.
+- Defines one display switch, `\evidencemarginfalse`: this affects **PDF display only**. When
+  disabled, no evidence content appears in the PDF and all other page content remains unchanged.
+  The switch is not source sanitization; clean source export is Story 009.
+- Loads `[T1]{fontenc}` and `xcolor`; initializes `hyperref` after the preamble so the manuscript
+  can supply its own package options before then. If using a package that requires hyperref
+  first (for example, `cleveref`), explicitly load hyperref before that package; deferred
+  initialization does not replace normal package dependency ordering.
+
+## Annotation brevity and source links
+
+Visible annotations are **normally one or two short lines**, not intent paragraphs or full source
+paths. Use a short claim ID plus edition ID and one linked source basename with SHA-12.
+The first supporting artifact is displayed by default; optional `claim.display_artifact`
+selects another existing support aggregate/source-map. A `+N sources` link opens the manifest
+for the remaining support. No support is removed: the manifest and non-rendered JSON comments
+retain every support ID, full locator, commit, SHA and intent. Other YAML extension fields
+remain in the authoritative manifest. Do not add a generic `display_note` prose field.
+
+Handle URI-special characters safely in links. Keep the link gray even when document links are
+blue. Maintain the existing gray annotation macro, `\evidencemarginfalse`, and clean-source-export
+behavior. Display control and sanitization/export are distinct: hiding annotations in a PDF does
+not remove them from source files; clean export governs source sanitization.
+
+File links are true URI actions. Git artifacts always use an explicitly labeled `(locator)`
+link to the authoritative manifest, so checking out or deleting a historical working file
+cannot change generated metadata. Retrieve pinned bytes through the existing evidence CLI.
+Snapshot/retained artifacts link to their recorded files. Projection does not inspect source
+availability or create blob copies/caches; freshness checks handle unavailable retained inputs.
+
+## Usage
 
 ```sh
 python tools/evidence_projection.py generate evidence-manifest.yaml --tex draft.tex --output evidence-metadata.tex
 python tools/evidence_projection.py validate-id proposed-id
 ```
 
-## 不变量
+## Invariants
 
-- **生成文件不手改**：每次重新生成完整覆盖（确定性输出，同输入字节相同；幂等）。
-  覆盖已有不同内容时打印 notice。文件头为
-  `%% Generated by evidence_projection.py -- DO NOT EDIT`。
-- **ID 字符集**：仅 ASCII 字母/数字/连字符。清单或草稿 `\evidenceblock{...}` 中的
-  非法 ID、以及清单中不存在的 ID，都是消费者可见错误（退出码 2，单行
-  `evidence-projection: error: ...`），不产生损坏 TeX。
-- **字段转义而非拒绝**：字段值中的 `_ % # & $ ~ ^ \ { }` 与空格被转义，渲染文本
-  往返等于清单字段内容（T1 编码保证 `_` 可提取；locator 包在 `\mbox` 中避免换行
-  拆断字段文本）。转义为单趟扫描，确定性。
-- 无任何"语言润色/字数统计"处理；投影只做元数据渲染。
+- **Never hand-edit generated output:** each generation replaces the complete file (deterministic
+  output; identical inputs yield identical bytes; idempotent). Print a notice when replacing
+  different existing content. The header is `%% Generated by evidence_projection.py -- DO NOT EDIT`.
+- **ID character set:** ASCII letters, digits, and hyphens only. An invalid ID or an ID absent
+  from the manifest, whether in the manifest or a draft `\evidenceblock{...}` call, is a
+  consumer-visible error (exit code 2, one line `evidence-projection: error: ...`); do not emit
+  damaged TeX.
+- **Separate URI encoding from label escaping:** preserve source paths in the manifest,
+  URI-encode link targets, and TeX-escape short visible labels in one deterministic pass.
+  Complete locators belong in non-rendered metadata, not unbreakable visible boxes.
+- Do not perform any "language polishing" or word-count handling; projection renders metadata
+  only.
+- A visible short annotation or selected link is a display choice, not a complete evidence record:
+  preserve all support IDs and provenance in the manifest and generated non-rendered JSON comments.
+  Projection alone neither adopts evidence nor certifies claim-to-source coverage.

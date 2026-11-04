@@ -36,10 +36,7 @@ except ModuleNotFoundError:  # pragma: no cover - dependency notice
 PROFILE_SCHEMA = "pws.venue-profiles/1"
 PAPER_PLAN_SCHEMA = "pws.paper-plan/1"
 REPORT_SCHEMA = "pws.submission-report/1"
-BOUNDARY = (
-    "Package completeness is not submission clearance; the author performs the actual submission. "
-    "包完整 ≠ 可投稿；实际投稿由作者执行。"
-)
+BOUNDARY = "Package completeness is not submission clearance; the author performs the actual submission."
 SCIENTIFIC_CAVEAT = "Metadata agreement does not establish scientific support."
 DEFAULT_PROFILES = Path(__file__).resolve().parents[1] / "configs" / "venue-profiles.json"
 CITATION_COMMANDS = {
@@ -758,7 +755,7 @@ def disclosure(venue_id: str, usage_value: str | Path,
     if profile is None:
         return {
             "schema": REPORT_SCHEMA, "status": "fail", "venue": venue_id,
-            "text": "Unknown venue. 核对现行政策 (verify the current policy); no default disclosure text is generated.",
+            "text": "Unknown venue. Verify the current policy; no default disclosure text is generated.",
             "source": None, "boundary": BOUNDARY,
         }
     ai = profile.get("ai")

@@ -1,215 +1,287 @@
-# 阶段说明：起草 — 主线、提纲、分节写法与语言完整性（storyline before outline）
+# Stage guide: Drafting — storyline, outline, section writing, and language completeness (storyline before outline)
 
-本 reference 覆盖起草阶段的主线讨论、段落级提纲、分节起草次序与各节写法，
-以及结构修订后的整稿语言 pass（含 FR-B4 反电报体缺陷清单与豁免、FR-B5
-语言 pass 与 Vale 晋升门槛）。证据核验属证据检查阶段，评审清单与 prune
-流程属编辑评审阶段（Story 012）。本阶段给组织建议与评审输入，不改手稿、
-不运行科学计算、不自动修改任何文字。
+This reference covers storyline discussion, paragraph-level outlines, section drafting order
+and section-specific guidance, and the whole-draft language pass after structural revision
+(including the FR-B4 anti-telegraphic-prose defect list and exemptions, and the FR-B5 language
+pass and Vale promotion threshold). Evidence verification belongs to evidence checking;
+review checklists and pruning belong to editorial review (Story 012). This stage provides
+organizational advice and review input; it does not edit the manuscript, run scientific
+computations, or automatically modify text.
 
-## 输入
+## Inputs
 
-- 作者确认的材料组与论文定位，或已经细化的当前 Paper Plan；承接贡献、证据图
-  （claim–evidence map，FR-A3）、反例/限制与既有图表/章节决定。完整 Plan 是
-  本阶段逐步形成的产出，不是开始讨论主线的前提。
-- 作者既有的写作与图形约定：缺省遵循。
+- An author-confirmed material set and paper positioning, or the current, further-developed
+  Paper Plan; carry forward contributions, the claim–evidence map (FR-A3), counterexamples/
+  limitations, and existing figure/section decisions. A complete Plan is an output built
+  gradually during this stage, not a prerequisite for beginning storyline discussion.
+- The author's existing writing and figure conventions: follow them by default.
 
-## 自上而下：同一份 Plan，逐层具体化
+## Top-down: one Plan, refined layer by layer
 
-从第一个未解决的层次继续；下表是论证的细化顺序，不是六份记录或六次强制审批。
-每次给当前层的具体产出，推荐一条有理由的方向；实质取舍才给备选、提问，接受
-自由回答。已有答案直接沿用。“next”只推进已批准范围内下一项有依据的工作，
-不替作者批准未见的科学结论、新设计或计算。
+Continue from the first unresolved layer. The table is the order for refining the argument,
+not six separate records or six mandatory approvals. At each step provide a concrete output
+for the current layer and recommend one reasoned direction; offer alternatives and ask only
+when a substantive trade-off exists, and accept open-ended responses. Reuse existing answers.
+"Next" advances only the next evidence-based task in the authorized scope; it does not approve
+unseen scientific conclusions, designs, or computations.
 
-| 层次 | 最小有用产出 | 何时继续 |
+| Layer | Minimum useful output | When to continue |
 |---|---|---|
-| 论文定位 | 复用材料阶段的问题、读者、文章类型、增量、最近工作与范围 | 作者意图足以区分本篇论文；不足才回材料阶段补关键项 |
-| 主线 | 下节的一段论证，不是章节名单或期望的成功结果 | 作者选择/修正论证方向；已有确认不重问 |
-| 章节作用 | 每节的读者问题、要点、claims/来源、证据情况和过渡 | 各节确实推进主线，而非只有标题 |
-| 章节–图形设计 | 与章节一起细化下述 figure brief；纯文字论证不强加图 | 作者同意设计；数据未回不等于设计未定 |
-| 段落论证 | 每段一个预期要点及所需证据/引文/限定，检查衔接 | 在既有联合 Plan 确认点确认，不逐段另设审批 |
-| 面向读者的正文 | 在批准的写作范围内，把支持充分的段落写成科学论证 | 交既有作者/科学/编辑检查；编译通过不等于写作认可 |
+| Paper positioning | Reuse the materials stage's question, readership, article type, contribution, nearest work, and scope | The author's intent distinguishes this paper; if not, return to the materials stage for the missing essential item |
+| Storyline | The argument in one paragraph, not a section list or hoped-for result | The author selects or revises the argument; do not re-ask confirmed decisions |
+| Section roles | Each section's reader question, key point, claims/sources, evidence status, and transition | Sections demonstrably advance the storyline, rather than providing headings alone |
+| Section–figure design | Refine the figure brief described below alongside the sections; do not impose a figure on a text-only argument | The author agrees to the design; outstanding data do not mean the design is undecided |
+| Paragraph argument | Each paragraph's intended point and required evidence/citations/qualifications; check transitions | Confirm at the existing joint Plan checkpoint; do not create separate paragraph approvals |
+| Reader-facing prose | Write adequately supported paragraphs as scientific argument within the approved writing scope | Submit to the existing author/science/editorial checks; successful compilation is not writing approval |
 
-章节与图形相互检验，不机械串行；图形改变论证时回到受影响的章节/主线。相关
-文献在定位与主线时就支撑具体缺口，随后落实到节/段的 claim，不末尾补引文堆。
-每次回应简短交代当前进度、具体变化、必要的未决问题与下一动作；用户看论文内容
-与实质障碍，行政证明留在工作记录。
+Sections and figures cross-check one another; do not treat them as a rigid sequence. If a figure
+changes the argument, revisit the affected section/storyline. Relevant literature should support
+a specific gap during positioning and storyline work, then connect to claims in sections and
+paragraphs; do not append a citation pile at the end. Keep each response brief: current progress,
+concrete change, essential unresolved issue, and next action. The user needs paper content and
+substantive blockers; administrative evidence belongs in the work record.
 
-## 主线先行：先 storyline，后提纲
+## Storyline first: storyline before outline
 
-Paper Plan 讨论中，代理**先给出一条简短主线**，再谈提纲；提纲不得先于
-主线出现。
+During Paper Plan discussion, the agent **presents a concise storyline first**, then discusses
+the outline; the outline must not precede the storyline.
 
-**一条主线的五个要素**（缺一不算成稿）：
+**Five required elements of a storyline** (without all five it is not complete):
 
-1. 核心问题：论文回答的科学问题（一句）。
-2. 具体缺口：最接近的已有方法能做什么、具体哪里不够（不是"领域缺乏研究"）。
-3. 认识/能力变化：本文带来什么新的认识或能力。
-4. 关键证据：支撑这一变化的核心结果（点名证据图中的 claim，不引用未登记材料）。
-5. 读者理解顺序：读者需要按什么顺序理解这些证据。
+1. Core question: the scientific question the paper answers (one sentence).
+2. Specific gap: what the closest existing method can do and exactly where it falls short
+   (not "the field lacks research").
+3. Change in understanding/capability: what new understanding or capability the paper brings.
+4. Key evidence: the central result supporting that change (name a claim in the evidence map;
+   do not cite unregistered material).
+5. Reader's order of understanding: the order in which the reader needs to understand this
+   evidence.
 
-**成段文字，不是章节名列表。** 主线用一段连贯文字说明论证如何推进；
-只列"Introduction → Methods → Results"式的章节名不是主线。
+**A paragraph, not a list of section names.** Explain in connected prose how the argument
+progresses. A list such as "Introduction → Methods → Results" is not a storyline.
 
-**备选主线的判定**：组织方式服从论文的实际贡献、证据与读者，不预设固定模板。
-贡献先行、问题先行等只是常见示例，不是固定菜单，也不要求每次给齐几种固定选项；
-仅当确有不同的组织方向（例如按方法维度还是按物理问题
-维度推进论证会得到实质不同的论文）才给出少量备选，并说明备选间真实的取舍；
-不为凑选项制造表面差异。没有实质分歧时只给一条。限制先行不是缺省组织方式：
-限制与反例在证据要求处作为约束进入主线（见上），负面证据不隐藏、也不引入与
-论断无关的负面材料。作者已表明不偏好以"方法局限"作为默认开篇框架；这是叙事
-组织偏好，不否定限制导向研究的价值，也不禁止以具体方法限制为主线的论文。
+**When to offer alternative storylines:** Organization follows the paper's actual contribution,
+evidence, and readership; do not assume a fixed template. Contribution-first and question-first
+are common examples, not a fixed menu, and there is no requirement to offer a set number of
+options each time. Offer a few alternatives only when there are genuinely different structures
+(for example, an argument organized by method dimension versus physical question would produce
+a materially different paper), and explain the real trade-off. Do not manufacture superficial
+differences to fill an option list. Offer one direction when there is no substantive disagreement.
+A limitations-first structure is not the default: counterexamples and limitations constrain the
+storyline where evidence is discussed (above); do not hide negative evidence or introduce negative
+material unrelated to the claim. The author has stated a preference against defaulting to a
+"method limitations" opening. This is a narrative preference, not a denial of the value of
+limitations-oriented research or a ban on papers whose storyline centers on a specific method
+limitation.
 
-**主线是证据支持的论证路径，不是预设的成功故事。**
+**A storyline is an evidence-supported argument, not a presumed success story.**
 
-- 反例、限制与未解决问题必须作为约束出现在主线中；不隐藏冲突、不夸大因果。
-- 支持“方法限制”论断的负面结果必须保留并按该论断的措辞与范围判断其证据标签：
-  REFUTE 是对某个具体陈述的标注，不是对结果价值的否定；NOT-ENOUGH-INFO
-  不单独建立该论断。若材料反驳的是“方法普遍有效”而支持“方法在此条件下受限”，
-  依 FR-A3 对两个不同陈述分别判断，不把反驳宽泛主张的结果误当作反驳限制论断。
-- 不把开发顺序（先做了什么工具）写成发现逻辑（为什么这样认识问题）。
-- 后续证据改变关键论点时，代理提出主线及相关段落的修改建议，交作者确认。
-- 主线里的方法/流程只能以本文**将**论证或提出的目标口吻出现（"本文将给出/检验…"）；未实现、未验证的内容不得写成已交付或已验证的贡献，"validated procedure" 一类表述仅在证据已支持该验证时可用。
-- 对最接近已有工作的任何特征描述（它假设什么、缺什么、如何失败）必须有具名来源；来源不在材料集中就保持明确 open，不得从研究空白推断其做法或结论，也不得由个别失败案例推导普遍必要条件。
+- Counterexamples, limitations, and unresolved questions must constrain the storyline; do not
+  hide conflicts or exaggerate causality.
+- Retain negative results that support a "method limitation" claim, and judge their evidence
+  labels against the wording and scope of that claim. REFUTE labels a specific statement; it
+  does not negate the value of a result. NOT-ENOUGH-INFO does not establish the claim by itself.
+  If evidence refutes "the method is universally effective" but supports "the method is limited
+  under this condition," assess the two distinct statements separately under FR-A3; do not mistake
+  evidence against a broad claim for evidence against the limitation claim.
+- Do not turn the order of development (which tool was built first) into the logic of discovery
+  (why the problem is understood this way).
+- If later evidence changes a key argument, propose revisions to the storyline and related
+  paragraphs for author confirmation.
+- Methods/processes in the storyline may appear only as a goal the paper **will** argue or
+  propose ("this paper will present/test …"). Do not present unimplemented or unverified work as
+  delivered or validated; use "validated procedure" only when evidence supports that validation.
+- Every description of the closest existing work (its assumptions, omissions, or failure modes)
+  needs a named source. If the source is not in the materials set, leave the point explicitly
+  open; do not infer its methods or conclusions from a research gap or generalize a necessary
+  condition from an individual failure case.
 
-## 章节与图形：共同设计，同一份 skeleton
+## Sections and figures: co-design, one shared skeleton
 
-作者选择或修正主线后，按上表关联材料、章节与图形。每节说明读者问题和要点、
-所需 claim/证据/文献、位置理由及前后衔接；每图给出可在精确绘图前讨论的 brief：
+After the author chooses or revises the storyline, relate materials, sections, and figures as in
+the table above. For each section, state the reader's question and key point, required claims/
+evidence/literature, the reason for its placement, and its transitions. For each figure, provide
+a brief that can be discussed before precise plotting:
 
-- **读者目的/claim 与位置**：读者应理解什么，由哪节引入并解释；
-- **构成**：面板或流程结构、观测量/坐标与关键成分；不预设面板数；
-- **条件与比较**：固定什么、改变什么、哪些条件尚未匹配；
-- **证据/待定项**：来源链接、已有/缺失数据、尚需作者决定的事项。
+- **Reader purpose/claim and placement:** what the reader should understand, and which section
+  introduces and explains it.
+- **Composition:** panel or flow structure, measured quantities/axes, and key components; do not
+  assume a panel count.
+- **Conditions and comparisons:** what is held fixed, what changes, and which conditions are not
+  yet matched.
+- **Evidence/open items:** source links, available/missing data, and decisions still needed from
+  the author.
 
-一个图形设计不声称观察到结果，也不制造曲线。Plan 存论证与决定；工作台链接
-一份 living skeleton，以 checkbox 简述每节/每图的要点，并分别显示 **设计已同意、
-来源/数据可用、文本/图已产出、已评审**。四项不互相代替，不成为新生命周期或
-四个审批 gate；有障碍时注明负责人/下一动作。详细 brief 与计算 TODO 各有一个
-家，其他视图链接而不复制；缺失/委派工作的分类沿用 [材料说明](material-plan.md#缺失材料与待办)。
+A figure design does not claim that a result has been observed or invent a curve. The Plan holds
+the argument and decisions; the workspace links to one living skeleton, using checkboxes to
+summarize each section/figure's key points and to show separately **design agreed, source/data
+available, text/figure produced, reviewed**. These four statuses do not substitute for one
+another and do not create a new lifecycle or four approval gates. Note the owner/next action
+where blocked. Keep each detailed brief and computation TODO in one authoritative place; other
+views link rather than copy them. Classify missing/delegated work using [the materials guide](material-plan.md#missing-material-and-follow-up).
 
-未采用的材料留在工作台，不进入提纲，也不删除记录。主线、贡献、证据图与
-章节/图形/段落提纲在既有 Plan 检查点一并交作者确认，可按明确范围分批；不另
-建审批系统。确认前是组织建议，不改手稿、不删图、不替换采用的证据。
+Unadopted materials remain in the workspace, not in the outline, and their records are not
+deleted. Confirm the storyline, contribution, evidence map, and section/figure/paragraph outline
+together at the existing Plan checkpoint, or in explicitly scoped batches; do not create a new
+approval system. Until confirmed, these are organizational proposals: they do not edit the
+manuscript, delete figures, or replace adopted evidence.
 
-## 修订与承接
+## Revisions and continuity
 
-最新明确的替换决定是当前基线；旧版标日期归入 superseded 历史，可选项不回流为
-必做项。完整替换图形组合时同步指出受影响的节/claim/段落/数据需求，保留分别
-选定的对照，不合并不同控制变量；与替换无关的已确认内容保持有效。
-呈现/措辞纠正只调整对应提纲或获授权文字，不重开物理范围。贡献、读者或科学
-解释变化只将受影响的依赖项交作者判断；有争议的表示/科学 claim 不自动换成
-另一主张，也不连带撤销无关确认。原始研究记录与科学结论不自动传播修改。
+The latest explicit replacement decision is the current baseline; date older versions and retain
+them as superseded history; do not reintroduce optional items as requirements. When replacing a
+complete figure set, identify affected sections/claims/paragraphs/data needs together, preserve
+comparisons selected separately, and do not merge different control variables. Unrelated confirmed
+content remains valid. Correcting presentation/wording changes only the relevant outline or
+authorized text; it does not reopen the physical scope. If contribution, readership, or scientific
+interpretation changes, take only affected dependencies to the author for judgment. Do not
+silently replace a disputed representation/scientific claim with another claim or revoke unrelated
+confirmations. Changes do not propagate automatically to original research records or scientific
+conclusions.
 
-## 段落级提纲
+## Paragraph-level outline
 
-在主线方向与章节/图形作用明确后，形成段落级提纲草案，提交既有联合确认：
+After the storyline direction and section/figure roles are clear, prepare a draft paragraph-level
+outline for the existing joint confirmation:
 
-- 组织为“读者需要理解什么 → 本文做了什么 → 哪些证据支持 → 能得出什么、
-  不能得出什么”的论证顺序，不是研究日志的时间顺序。
-- 每段一句预期论证要点，关联所需证据/引文及必要限定；不把计划中的结果当观察。
-- 提纲每段与主线可对应：能说明这一段在主线论证中的位置。对不上主线的段落
-  要点是提纲问题，回主线讨论解决，不靠在正文里硬拼。
-- 主线与提纲一并交作者确认。
+- Organize it as "what the reader needs to understand → what the paper did → which evidence
+  supports it → what can and cannot be concluded," not in the chronological order of a research log.
+- Give each paragraph one intended argumentative point and connect it to required evidence/
+citations and qualifications; do not treat planned results as observations.
+- Every outline paragraph must map to the storyline: explain its role in the argument. A paragraph
+  that cannot map to the storyline is an outline problem; return to storyline discussion rather
+  than forcing it into the prose.
+- Confirm the storyline and outline together with the author.
 
-## 分节起草次序与各节写法
+## Section drafting order and section-specific guidance
 
-在已确认的主线与段落级提纲内分节起草。**起草次序服从贡献**：数值/方法论
-文可先写承载核心证据的 Results 与必要 Methods，再写 Introduction、
-Discussion，最后校准 Abstract、标题和 Conclusion；理论论文可先完成关键
-推导与物理解释。不强制单一顺序；各部分回答同一个研究问题，最终互相校准。
-提纲次序体现贡献：每段先论证（这一段要确立什么），再引入支持它的证据，
-不把研究日志笔记按时间顺序拼成正文。
+Draft sections within the confirmed storyline and paragraph outline. **Drafting order follows the
+contribution:** a numerical/methodology paper may start with Results carrying the central evidence
+and the necessary Methods, then write Introduction and Discussion, and finally align the Abstract,
+title, and Conclusion. A theory paper may first complete its key derivation and physical
+interpretation. No single order is mandatory; all sections answer the same research question and
+must ultimately be aligned with one another. The outline reflects the contribution: each paragraph
+first makes its argument (what it establishes), then introduces supporting evidence; do not stitch
+research-log notes into prose chronologically.
 
-**Introduction：面向读者的缺口与贡献。** 从科学背景与具体动机进入；说明最
-接近的已有工作能解决什么、具体哪里受限，再说明本文增量与证据范围。用简短
-章节路线说明全文如何展开，不用逐图目录代替。文献支撑具体定位，不堆引文，
-不从领域通史写起，也不用功能清单或泛泛的重要性填充篇幅。
+**Introduction: a reader-facing gap and contribution.** Begin with scientific background and a
+specific motivation. Explain what the closest existing work can resolve and exactly where it is
+limited, then state the paper's contribution and evidence scope. Briefly describe the section route;
+do not substitute a figure-by-figure catalog. Cite literature to support the specific positioning;
+avoid citation piles, a field-wide history as the starting point, and padding with feature lists or
+generic importance.
 
-**Methods：先定义，再操作。** 先定义对象、符号、约定和适用条件，再给关键
-步骤与必要的实现选择。引入方程时说明为何引入、符号含义及与物理问题的关系；
-不陈列公式、不复述代码。数学结论引用既有推导依据（证据图或已记录的推导），
-润色不自行改动推导内容。
+**Methods: define before describing operations.** Define objects, notation, conventions, and
+conditions of applicability first, then give key steps and necessary implementation choices.
+When introducing an equation, explain why it is needed, what its symbols mean, and how it relates
+to the physical question; do not list equations or repeat code. Cite existing derivational support
+for mathematical conclusions (in the evidence map or recorded derivation); editing must not change
+the derivation itself.
 
-**Results：问题、条件、特征、解释。** 每组结果先交代要检验的问题与比较
-条件，再指出图表中支持判断的特征，最后解释其意义与边界。正文不逐行重述
-表格、不逐点朗读曲线：图注说明图如何读，正文说明为什么值得看。失败对照
-若划定了方法边界就保留；排错经过不写成结果。
+**Results: question, conditions, features, interpretation.** For each set of results, first state
+the question and comparison conditions, then identify the features in figures/tables that support
+the assessment, and finally explain their meaning and limits. Do not restate a table line by line or
+read a curve point by point: the caption explains how to read the figure; the prose explains why it
+matters. Retain a failed comparison if it establishes a method boundary; do not report debugging
+history as a result.
 
-**Discussion 与 Conclusion：观察与解释分开。** 说明结果如何改变对问题的
-理解、与已有工作的关系及适用边界；未验证的机制明确作为假设，不以流畅的
-语言提升其证据等级。Conclusion 回答研究问题，不重复目录、不引入新结果。
+**Discussion and Conclusion: distinguish observation from interpretation.** Explain how the
+results change understanding of the question, their relation to existing work, and their domain of
+validity. Explicitly frame unverified mechanisms as hypotheses; fluent prose must not raise their
+evidence level. The Conclusion answers the research question; it does not repeat the outline or
+introduce new results.
 
-**Abstract 与标题：最后对齐实际完成的工作。** 简洁交代问题/缺口、方法或
-贡献、最重要且有依据的结果及意义；具体程度服从证据，不制造数字、不夸大
-普适性。标题对应贡献，不是开发任务名称。篇幅按目标期刊调整。
+**Abstract and title: align last with completed work.** Briefly state the question/gap, method or
+contribution, most important supported result, and significance. Specificity must match the
+evidence; do not invent numbers or exaggerate generality. The title reflects the contribution,
+not the development task. Adjust length to the target journal.
 
-## 从计划到正文：改变受众
+## From plan to prose: changing the audience
 
-以已确认的读者问题组织解释，不把“我们如何决定这篇论文”写成“本文论证了
-什么”。Figure briefs、备选方案、审批历史、未决工作流与计算 TODO 留在工作台；
-必要的科学假设、比较条件、限制与不确定性仍在约束 claim 的位置明确保留。
-Theory 解释对象/假设/推理，Implementation 解释如何实现，Results 给出条件下的
-观察，Discussion 解释意义与边界；按文章调整结构，不把方法论文模板强加各篇。
-这是语义/论证检查，不是禁词、自动改写或 Vale 规则。数据未回时仅继续已授权且
-有支持的部分，不用工作计划填充未完成的结果。
+Organize explanations around the confirmed reader's question; do not turn "how we decided on this
+paper" into "what this paper argues." Keep figure briefs, alternatives, approval history,
+unresolved workflow, and computation TODOs in the workspace. Explicitly retain necessary
+scientific assumptions, comparison conditions, limitations, and uncertainty where they constrain
+claims. Theory explains objects/assumptions/reasoning; Implementation explains how something was
+implemented; Results present observations under stated conditions; Discussion explains their
+meaning and limits. Adapt the structure to the article rather than imposing a methodology-paper
+template. This is a semantic/argument check, not a banned-word list, automatic rewrite, or Vale
+rule. When data have not arrived, continue only with authorized, supported material; do not use a
+work plan to fill in unfinished results.
 
-## 语言完整性（FR-B4）：反电报体
+## Language completeness (FR-B4): anti-telegraphic prose
 
-正文必须读起来像物理学家写出的连续、合语法的英文。以下缺陷类每一条都是
-评审必须逐例指出的缺陷，不是风格偏好：
+The paper must read as continuous, grammatical English written by a physicist. Each of the
+following is a defect the review must identify individually, not a matter of style preference:
 
-- 无动词碎片充当正文句子（"Rationale behind this choice unclear."）。
-- 分号从句堆叠代替完整句（一"句"内三四个分号隔开的并列片段）。
-- 名词堆叠复合词充当论断（"projector Green function exchange trace
-  stabilization"这类无谓语的长名词链）。
-- 丢冠词、丢介词（"set cutoff to 2 eV"在需要"the cutoff"的正文语境中）。
-- 图注碎片栈（"Pilot source; $E_F$ script-defined; sampled scope."这种
-  分号拼接的片段列表）。
+- Verb-less fragments used as manuscript sentences ("Rationale behind this choice unclear.").
+- Stacked semicolon clauses in place of complete sentences (three or four semicolon-separated
+  parallel fragments in one "sentence").
+- Noun-stack compounds used as claims (a long verbless noun chain such as "projector Green
+  function exchange trace stabilization").
+- Missing articles or prepositions ("set cutoff to 2 eV" in manuscript prose where "the cutoff"
+  is required).
+- Caption fragment stacks (fragments joined by semicolons, such as "Pilot source; $E_F$
+  script-defined; sampled scope.").
 
-**豁免清单（以下不算缺陷，双向核对）：** 常规图注标题句（"Figure 3:
-Strain dependence of the coupling."是完整句开头的常规标注）；数学简写
-（公式、行内符号、"$E_F$ script-defined"这类在图注表格中约定俗成的
-参数注记的紧凑形式，前提是它不替代正文句子）；坐标轴与面板标签（"a",
-"x (nm)", "T = 60 K"）；参考文献条目与代码注释。豁免的前提是该文本
-不承担正文句子的论证职能；碎片承担论证职能时一律算缺陷。
+**Exemptions (check in both directions; these are not defects):** conventional figure-caption
+opening/title text ("Figure 3: Strain dependence of the coupling." is a conventional label with
+a complete sentence opening); mathematical shorthand (equations, inline symbols, and compact,
+conventional parameter notes in figure captions/tables such as "$E_F$ script-defined", provided
+they do not replace a manuscript sentence); axis and panel labels ("a", "x (nm)", "T = 60 K");
+references and code comments. Exemption applies only when the text does not perform the
+argumentative function of a manuscript sentence; a fragment serving that function is always a
+defect.
 
-压缩不禁用碎片：预算压力与 prune 剪掉的句子由 writer 重新织入周围散文；
-剪完留下断句的剪裁是不完整的剪裁（FR-A7 衔接，见 Story 012）。
+Compression does not ban fragments: the writer must weave sentences cut under word limits or
+pruning back into the surrounding prose. A cut that leaves a broken sentence is incomplete
+pruning (FR-A7 continuity; see Story 012).
 
-## 整稿语言 pass（FR-B5）
+## Whole-draft language pass (FR-B5)
 
-结构修订完成后、提交打包前，由**单一 integrating writer**做一次全文
-语言 pass。pass 覆盖整稿一致性，不是逐句 lint：
+After structural revision and before submission packaging, **one integrating writer** performs
+a whole-draft language pass. It checks whole-document consistency; it is not sentence-by-sentence
+linting:
 
-- 单一声音与视角；时态一致（已做工作过去时、普遍事实现在时，全篇一致）。
-- 术语先定义后使用，全篇同一写法（不交替使用同义词指同一对象）。
-- 全文专查 FR-B4 缺陷类；同时检查贡献在标题/摘要/引言/结论中的一致性
-  与图文顺序可跟随性（架构"整稿通读而非仅 lint"）。
-- 作者风格缺省（2026-10-19 反馈，记录于 evidence/2026-10-19-story-011/
-  author-style-default.md）：正文避免成对破折号插入语（"supports X — that
-  … — and Y"式的句中插入），改用完整句子、逗号或冒号衔接。这是作者缺省
-  偏好，按输入节"作者既有的写作与图形约定：缺省遵循"逐篇可覆盖。它不是 FR-B4 缺陷、
-  不用于 AI 生成检测、也不禁用词内连字符或 en-dash 技术写法（frozen-axis、
-  orbital–magnon 等照常）；不做自动改写，不晋升 Vale 规则。
-- 纯措辞调整直接在批准的写作范围内进行；改变科学意思、删除/合并/降级
-  内容仍走作者确认，不在语言 pass 内顺手改掉。
+- One voice and point of view; consistent tense (completed work in past tense, general facts in
+  present tense), consistently applied throughout.
+- Define terminology before use and use one form consistently (do not alternate synonyms for the
+  same object).
+- Check the entire draft for FR-B4 defect classes; also check contribution consistency across
+  title/abstract/introduction/conclusion and whether readers can follow figure/text order (the
+  architecture requires "read the whole draft, not just lint").
+- Default author style (feedback recorded in `evidence/2026-10-19-story-011/author-style-default.md`):
+  avoid parenthetical interruptions between paired dashes in prose ("supports X — that … — and
+  Y"); use complete sentences, commas, or colons instead. This is the author's default
+  preference and may be overridden paper by paper under the input rule to follow the author's
+  existing writing/figure conventions by default. It is not an FR-B4 defect, must not be used to
+  detect AI generation, and does not ban hyphens within words or technical en dashes (use
+  "frozen-axis", "orbital–magnon", etc. as usual). Do not auto-rewrite or promote it to a Vale rule.
+- Make wording-only adjustments directly within the approved writing scope. Changes to scientific
+  meaning, or deletion/merging/downgrading of content, still require author confirmation; do not
+  make them opportunistically during a language pass.
 
-**机械启发与 Vale**：在 pandoc 生成的 Markdown 中间层上运行机械启发
-（碎片检测、句长离群、冠词/介词误用模式）与 Vale（FR-B2：pinned
-`Journals` 包 + 现有 custom rules）。机械输出是**评审输入**，不是自动
-修改：任何自动改稿都越权。
+**Mechanical heuristics and Vale:** Run mechanical heuristics (fragment detection, sentence-length
+outliers, article/preposition misuse patterns) and Vale (FR-B2: pinned `Journals` package plus
+existing custom rules) on the pandoc-generated Markdown intermediate. Mechanical output is
+**review input**, not an automatic edit; automated manuscript changes exceed scope.
 
-**Vale 晋升门槛（永不自动）**：机械启发中重复出现的电报体模式只成为
-**候选** custom Vale rule。候选晋升为永久规则（写入 `configs/`）须同时
-满足：在含该缺陷的文本上命中、在最近的合法情形（含上述豁免清单）上不误报
-——双向验证——并且是记录在案、作者批准的决定。仅"反复出现"不触发晋升；
-不可靠的模式留在编辑 pass 的 checklist 里。本 reference 交付时不晋升任何
-规则。
+**Vale promotion threshold (never automatic):** A recurring telegraphic pattern in mechanical
+heuristics is only a **candidate** custom Vale rule. Promoting a candidate to a permanent rule
+(written to `configs/`) requires all of the following: it flags text containing the defect, does
+not falsely flag the nearest legitimate cases (including the exemptions above)—both directions
+are tested—and the rule is a documented, author-approved decision. Recurrence alone does not
+trigger promotion; unreliable patterns stay on the editorial-pass checklist. This reference
+promotes no rules.
 
-## 边界（本 reference 刻意不覆盖）
+## Boundary (intentionally outside this reference)
 
-- 评审清单与 prune 流程：编辑评审阶段（references/editorial-review.md，
-  Story 012）。
-- manuscript 文件写入、新工具、逐段审批系统：一律不做；证据版本固定属
-  证据检查阶段。机械启发以 pandoc/Vale 现有能力运行，不新写 checker；
-  本阶段不晋升任何 Vale 规则、不新增 configs/ 内容。
+- Review checklists and pruning: editorial-review stage (`references/editorial-review.md`, Story 012).
+- Evidence verification/version pinning: evidence-check stage; however, every authorized manuscript
+  assembly or revision preserves or rebuilds adjacent evidence-block calls and generated metadata
+  as part of integration. Load [the evidence-projection guide](evidence-projection.md) for that
+  integration; projection is not evidence adoption or coverage certification.
+- Manuscript file writes, new tools, or a paragraph-by-paragraph approval system: out of scope.
+  Evidence version pinning belongs to evidence checking. Run mechanical heuristics through existing
+  pandoc/Vale capabilities; do not write a new checker, promote Vale rules, or add content to
+  `configs/` in this stage.
